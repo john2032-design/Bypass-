@@ -10,33 +10,6 @@ const countdownEl = document.getElementById(‘countdown’);
 const cancelBtn = document.getElementById(‘cancel-redirect’);
 const BYPASS_API = ‘/api/bypass’;
 
-// Navigation
-const navBtns = document.querySelectorAll(’.nav-btn’);
-const bypassPage = document.getElementById(‘bypass-page’);
-const supportedPage = document.getElementById(‘supported-page’);
-
-navBtns.forEach(btn => {
-btn.addEventListener(‘click’, () => {
-const page = btn.dataset.page;
-
-```
-  // Update active state
-  navBtns.forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  
-  // Show/hide pages
-  if (page === 'bypass') {
-    bypassPage.classList.remove('card-hidden');
-    supportedPage.classList.add('card-hidden');
-  } else if (page === 'supported') {
-    bypassPage.classList.add('card-hidden');
-    supportedPage.classList.remove('card-hidden');
-  }
-});
-```
-
-});
-
 function patternToRegex(p) {
 const esc = p.replace(/[.+^${}()|[]\]/g, ‘\$&’).replace(/\*/g, ‘.*’);
 return new RegExp(’^’ + esc + ‘$’, ‘i’);
@@ -68,6 +41,7 @@ return String(s)
 .replace(/’/g, ‘'’);
 }
 
+if (resultContent) {
 resultContent.addEventListener(‘click’, () => {
 const text = resultContent.dataset.raw || ‘’;
 if (!text) return;
@@ -77,12 +51,16 @@ resultContent.innerHTML = ‘<span style="color:var(--accent);font-weight:700">C
 setTimeout(() => resultContent.innerHTML = prev, 900);
 }).catch(() => {});
 });
+}
 
+if (form) {
 form.addEventListener(‘submit’, (ev) => {
 ev.preventDefault();
 submitUrl(urlInput.value.trim());
 });
+}
 
+if (urlInput) {
 urlInput.addEventListener(‘click’, () => {
 try {
 const v = urlInput.value || ‘’;
@@ -94,6 +72,7 @@ setTimeout(() => urlInput.value = old, 900);
 }).catch(() => {});
 } catch (e) {}
 });
+}
 
 document.addEventListener(‘keydown’, (e) => {
 if (e.key === ‘Escape’) cancelRedirect();
@@ -154,10 +133,12 @@ setValidation(‘Redirect cancelled.’, false);
 }
 }
 
+if (cancelBtn) {
 cancelBtn.addEventListener(‘click’, (e) => {
 e.preventDefault();
 cancelRedirect();
 });
+}
 
 async function submitUrl(urlVal) {
 if (!urlVal) {
@@ -198,7 +179,7 @@ return null;
 
 document.addEventListener(‘DOMContentLoaded’, () => {
 const pref = getQueryParam(‘url’) || getQueryParam(‘URL’) || getQueryParam(‘link’);
-if (pref) {
+if (pref && urlInput) {
 try {
 urlInput.value = pref;
 } catch (e) {}
