@@ -1,552 +1,157 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AFK Bypasser - Skip Wait Times</title>
-    <meta name="description" content="Bypass URL shorteners and skip wait times with AFK Bypasser">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
-
-        :root {
-            --primary: #0a0e17;
-            --secondary: #0f172a;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --text: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --glass: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --error: #ef4444;
-            --success: #10b981;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            margin-bottom: 10px;
-            background: linear-gradient(to right, var(--accent), #8b5cf6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: clamp(20px, 4vw, 30px);
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        input[type="url"] {
-            flex: 1;
-            padding: 16px 20px;
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
-            background: rgba(0, 0, 0, 0.2);
-            color: var(--text);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        input[type="url"]:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-        }
-
-        input[type="url"]::placeholder {
-            color: var(--text-secondary);
-        }
-
-        button {
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 16px 24px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            white-space: nowrap;
-        }
-
-        button:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        button:disabled {
-            background: #64748b;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .result-container {
-            margin-top: 20px;
-            display: none;
-        }
-
-        .result-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 1px solid var(--glass-border);
-            word-break: break-all;
-            min-height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .result-url {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
-        .result-url:hover {
-            text-decoration: underline;
-        }
-
-        .result-text {
-            color: var(--text);
-            font-size: 1rem;
-            line-height: 1.5;
-            text-align: center;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .secondary-btn {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .secondary-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-left: 4px solid var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .how-it-works {
-            margin-top: 40px;
-        }
-
-        .how-it-works h2 {
-            font-size: clamp(1.5rem, 3vw, 1.8rem);
-            margin-bottom: 20px;
-            color: var(--text);
-        }
-
-        .how-it-works p {
-            margin-bottom: 15px;
-            line-height: 1.6;
-            color: var(--text-secondary);
-        }
-
-        .steps {
-            margin-left: 20px;
-            margin-bottom: 20px;
-        }
-
-        .steps li {
-            margin-bottom: 10px;
-            line-height: 1.6;
-            color: var(--text-secondary);
-        }
-
-        .nav {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .nav a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            padding: 8px 16px;
-            border-radius: 8px;
-            background: rgba(59, 130, 246, 0.1);
-        }
-
-        .nav a:hover {
-            color: #8b5cf6;
-            background: rgba(59, 130, 246, 0.2);
-        }
-
-        .error {
-            color: var(--error);
-            text-align: center;
-            margin-top: 10px;
-            display: none;
-            padding: 12px;
-            background: rgba(239, 68, 68, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-
-        .success {
-            color: var(--success);
-            text-align: center;
-            margin-top: 10px;
-            display: none;
-            padding: 12px;
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .input-group {
-                flex-direction: column;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            button {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                padding: 10px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>AFK Bypasser</h1>
-            <p class="subtitle">Skip the wait times and get direct access to your content instantly</p>
-        </header>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlInput = document.getElementById('urlInput');
+        const bypassBtn = document.getElementById('bypassBtn');
+        const loading = document.getElementById('loading');
+        const error = document.getElementById('error');
+        const success = document.getElementById('success');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultUrl = document.getElementById('resultUrl');
+        const resultText = document.getElementById('resultText');
+        const copyBtn = document.getElementById('copyBtn');
+        const redirectBtn = document.getElementById('redirectBtn');
         
-        <main>
-            <div class="card">
-                <div class="input-group">
-                    <input type="url" id="urlInput" placeholder="Paste your URL here..." autocomplete="off" aria-label="URL to bypass">
-                    <button id="bypassBtn">
-                        <span>Bypass</span>
-                    </button>
-                </div>
-                
-                <div class="loading" id="loading">
-                    <div class="spinner" aria-hidden="true"></div>
-                    <p>Processing your request...</p>
-                </div>
-                
-                <div class="error" id="error" role="alert"></div>
-                <div class="success" id="success" role="status"></div>
-                
-                <div class="result-container" id="resultContainer">
-                    <div class="result-box">
-                        <a href="#" id="resultUrl" class="result-url" target="_blank" rel="noopener"></a>
-                        <p id="resultText" class="result-text"></p>
-                    </div>
-                    <div class="action-buttons">
-                        <button id="copyBtn" class="secondary-btn">
-                            <span>Copy Result</span>
-                        </button>
-                        <button id="redirectBtn">
-                            <span>Redirect</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlParam = urlParams.get('url');
+        
+        if (urlParam) {
+            urlInput.value = decodeURIComponent(urlParam);
+            setTimeout(() => {
+                bypassBtn.click();
+            }, 100);
+        }
+        
+        bypassBtn.addEventListener('click', async function() {
+            const url = urlInput.value.trim();
             
-            <div class="how-it-works">
-                <h2>How It Works</h2>
-                <p>AFK Bypasser uses a simple API to help you skip unnecessary wait times and access content directly from supported URL shorteners.</p>
-                
-                <ol class="steps">
-                    <li>Paste a URL from any of our supported services in the input field above</li>
-                    <li>Click the "Bypass" button to process the URL through our API</li>
-                    <li>Get direct access to your content or copy the bypassed result</li>
-                </ol>
-                
-                <p>Our service automatically processes your request and returns the direct content without additional steps or waiting periods.</p>
-            </div>
-            
-            <div class="nav">
-                <a href="/supported">View Supported Services</a>
-                <a href="/afk-bypasser.user.js" download>Download Userscript</a>
-            </div>
-        </main>
-
-        <footer class="footer">
-            <p>AFK Bypasser &copy; 2024 - Modern URL bypass solution</p>
-        </footer>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlInput = document.getElementById('urlInput');
-            const bypassBtn = document.getElementById('bypassBtn');
-            const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
-            const success = document.getElementById('success');
-            const resultContainer = document.getElementById('resultContainer');
-            const resultUrl = document.getElementById('resultUrl');
-            const resultText = document.getElementById('resultText');
-            const copyBtn = document.getElementById('copyBtn');
-            const redirectBtn = document.getElementById('redirectBtn');
-            
-            // Check if URL parameter exists and auto-fill
-            const urlParams = new URLSearchParams(window.location.search);
-            const urlParam = urlParams.get('url');
-            
-            if (urlParam) {
-                urlInput.value = decodeURIComponent(urlParam);
-                // Auto-submit after a brief delay to ensure page is loaded
-                setTimeout(() => {
-                    bypassBtn.click();
-                }, 800);
+            if (!url) {
+                showError('Please enter a URL');
+                return;
             }
             
-            // Bypass button click handler
-            bypassBtn.addEventListener('click', async function() {
-                const url = urlInput.value.trim();
+            try {
+                new URL(url);
+                if (!url.startsWith('http')) {
+                    throw new Error('Invalid protocol');
+                }
+            } catch (e) {
+                showError('Please enter a valid URL starting with http:// or https://');
+                return;
+            }
+            
+            loading.style.display = 'block';
+            error.style.display = 'none';
+            success.style.display = 'none';
+            resultContainer.style.display = 'none';
+            bypassBtn.disabled = true;
+            bypassBtn.innerHTML = '<span>Processing...</span>';
+            
+            try {
+                const apiUrl = `https://afklol-api.vercel.app/bypass?url=${encodeURIComponent(url)}`;
+                const response = await fetch(apiUrl);
                 
-                if (!url) {
-                    showError('Please enter a URL');
-                    return;
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status} ${response.statusText}`);
                 }
                 
-                // Validate URL format
-                let validUrl;
+                const data = await response.text();
+                
+                if (!data || data.trim() === '') {
+                    throw new Error('Empty response from API');
+                }
+                
+                let result = data;
+                let processTime = '';
+                
                 try {
-                    validUrl = new URL(url);
-                    if (!validUrl.protocol.startsWith('http')) {
-                        throw new Error('Invalid protocol');
+                    const jsonData = JSON.parse(data);
+                    if (jsonData.result) {
+                        result = jsonData.result;
+                    }
+                    if (jsonData.time) {
+                        processTime = ` (${jsonData.time}s)`;
                     }
                 } catch (e) {
-                    showError('Please enter a valid URL starting with http:// or https://');
-                    return;
                 }
                 
-                // Show loading state
-                loading.style.display = 'block';
-                error.style.display = 'none';
-                success.style.display = 'none';
-                resultContainer.style.display = 'none';
-                bypassBtn.disabled = true;
-                bypassBtn.innerHTML = '<span>Processing...</span>';
+                displayResult(result);
+                showSuccess(`URL processed successfully!${processTime}`);
                 
-                try {
-                    // Call the API
-                    const apiUrl = `https://afklol-api.vercel.app/bypass?url=${encodeURIComponent(url)}`;
-                    const response = await fetch(apiUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error(`API error: ${response.status} ${response.statusText}`);
-                    }
-                    
-                    const data = await response.text();
-                    
-                    if (!data || data.trim() === '') {
-                        throw new Error('Empty response from API');
-                    }
-                    
-                    // Process the response
-                    displayResult(data);
-                    showSuccess('URL processed successfully!');
-                    
-                } catch (err) {
-                    console.error('Bypass error:', err);
-                    showError(`Failed to bypass URL: ${err.message}`);
-                } finally {
-                    loading.style.display = 'none';
-                    bypassBtn.disabled = false;
-                    bypassBtn.innerHTML = '<span>Bypass</span>';
-                }
-            });
-            
-            function displayResult(result) {
-                // Clean the result
-                const cleanResult = result.trim();
-                
-                // Check if result is a URL
-                try {
-                    const testUrl = new URL(cleanResult);
-                    // It's a valid URL
-                    resultUrl.href = cleanResult;
-                    resultUrl.textContent = cleanResult;
-                    resultUrl.style.display = 'block';
-                    resultText.style.display = 'none';
-                    redirectBtn.style.display = 'block';
-                } catch (e) {
-                    // It's not a URL, display as text
-                    resultUrl.style.display = 'none';
-                    resultText.textContent = cleanResult;
-                    resultText.style.display = 'block';
-                    redirectBtn.style.display = 'none';
-                }
-                
-                resultContainer.style.display = 'block';
-                // Scroll to result for better UX
-                resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (err) {
+                console.error('Bypass error:', err);
+                showError(`Failed to bypass URL: ${err.message}`);
+            } finally {
+                loading.style.display = 'none';
+                bypassBtn.disabled = false;
+                bypassBtn.innerHTML = '<span>Bypass</span>';
             }
-            
-            function showError(message) {
-                error.textContent = message;
-                error.style.display = 'block';
-                success.style.display = 'none';
-                resultContainer.style.display = 'none';
-            }
-            
-            function showSuccess(message) {
-                success.textContent = message;
-                success.style.display = 'block';
-                error.style.display = 'none';
-            }
-            
-            // Copy button handler
-            copyBtn.addEventListener('click', function() {
-                const textToCopy = resultUrl.style.display !== 'none' ? resultUrl.href : resultText.textContent;
-                
-                navigator.clipboard.writeText(textToCopy)
-                    .then(() => {
-                        // Visual feedback
-                        const originalText = copyBtn.innerHTML;
-                        copyBtn.innerHTML = '<span>Copied!</span>';
-                        copyBtn.style.background = 'var(--success)';
-                        setTimeout(() => {
-                            copyBtn.innerHTML = originalText;
-                            copyBtn.style.background = '';
-                        }, 2000);
-                    })
-                    .catch(err => {
-                        console.error('Failed to copy: ', err);
-                        showError('Failed to copy to clipboard');
-                    });
-            });
-            
-            // Redirect button handler
-            redirectBtn.addEventListener('click', function() {
-                if (resultUrl.href) {
-                    window.location.href = resultUrl.href;
-                }
-            });
-            
-            // Allow Enter key to submit
-            urlInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    bypassBtn.click();
-                }
-            });
-            
-            // Focus the input on load for better UX
-            urlInput.focus();
         });
-    </script>
-</body>
-</html>
+        
+        function displayResult(result) {
+            const cleanResult = result.trim();
+            
+            try {
+                const testUrl = new URL(cleanResult);
+                resultUrl.href = cleanResult;
+                resultUrl.textContent = cleanResult;
+                resultUrl.style.display = 'block';
+                resultText.style.display = 'none';
+                redirectBtn.style.display = 'block';
+            } catch (e) {
+                resultUrl.style.display = 'none';
+                resultText.textContent = cleanResult;
+                resultText.style.display = 'block';
+                redirectBtn.style.display = 'none';
+            }
+            
+            resultContainer.style.display = 'block';
+            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        function showError(message) {
+            error.textContent = message;
+            error.style.display = 'block';
+            success.style.display = 'none';
+            resultContainer.style.display = 'none';
+        }
+        
+        function showSuccess(message) {
+            success.textContent = message;
+            success.style.display = 'block';
+            error.style.display = 'none';
+        }
+        
+        copyBtn.addEventListener('click', function() {
+            const textToCopy = resultUrl.style.display !== 'none' ? resultUrl.href : resultText.textContent;
+            
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<span>Copied!</span>';
+                    copyBtn.style.background = 'var(--success)';
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.style.background = '';
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    showError('Failed to copy to clipboard');
+                });
+        });
+        
+        redirectBtn.addEventListener('click', function() {
+            if (resultUrl.href) {
+                window.location.href = resultUrl.href;
+            }
+        });
+        
+        urlInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                bypassBtn.click();
+            }
+        });
+        
+        urlInput.focus();
+    });
+</script>
