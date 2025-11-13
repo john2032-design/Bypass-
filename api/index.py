@@ -2,8 +2,9 @@ from flask import Flask, render_template, jsonify, request, send_from_directory
 from urllib.parse import urlparse
 import os
 import json
+import traceback
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", template_folder="templates")
 
 SUPPORTED_LIST = [
     "https://work.ink/*",
@@ -29,30 +30,52 @@ SUPPORTED_LIST = [
     "https://lootlinks.co/*"
 ]
 
-@app.route('/')
+def is_supported_url(url):
+    try:
+        for pattern in SUPPORTED_LIST:
+            p = pattern.replace("*", "")
+            if p and p in url:
+                return True
+        return False
+    except Exception:
+        return False
+
+@app.route("/")
 def index():
-    return render_template('index.html', match_list=json.dumps(SUPPORTED_LIST))
+    try:
+        return render_template("index.html", match_list=SUPPORTED_LIST)
+    except Exception:
+        print(traceback.format_exc())
+        return "Internal Server Error", 500
 
-@app.route('/supported')
+@app.route("/supported")
 def supported():
-    return render_template('index.html', match_list=json.dumps(SUPPORTED_LIST))
+    try:
+        return render_template("index.html", match_list=SUPPORTED_LIST)
+    except Exception:
+        print(traceback.format_exc())
+        return "Internal Server Error", 500
 
-@app.route('/api/bypass')
+@app.route("/api/bypass")
 def api_bypass():
-    url = request.args.get('url')
-    if not url:
-        return jsonify({'status': 'error', 'message': 'No URL provided.'})
-    parsed = urlparse(url)
-    if not parsed.scheme.startswith('http'):
-        return jsonify({'status': 'error', 'message': 'Invalid URL.'})
-    if not any(pattern.replace('*', '') in url for pattern in SUPPORTED_LIST):
-        return jsonify({'status': 'error', 'message': 'Unsupported link.'})
-    return jsonify({'status': 'success', 'result': url + "?bypassed=true"})
+    try:
+        url = request.args.get("url")
+        if not url:
+            return jsonify({"status":"error","message":"No URL provided."}), 400
+        parsed = urlparse(url)
+        if not parsed.scheme or not parsed.scheme.startswith("http"):
+            return jsonify({"status":"error","message":"Invalid URL."}), 400
+        if not is_supported_url(url):
+            return jsonify({"status":"error","message":"Unsupported link."}), 400
+        return jsonify({"status":"success","result":url + "?bypassed=true"})
+    except Exception:
+        print(traceback.format_exc())
+        return jsonify({"status":"error","message":"Server error."}), 500
 
-@app.route('/static/<path:path>')
+@app.route("/static/<path:path>")
 def send_static(path):
-    return send_from_directory('static', path)
+    return send_from_directory("static", path)
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
