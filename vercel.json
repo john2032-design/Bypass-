@@ -13,27 +13,8 @@
   ],
   "routes": [
     {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/supported",
-      "dest": "/supported.html"
-    },
-    {
-      "src": "/update",
-      "dest": "/update.html"
-    },
-    {
-      "src": "/meta.js",
-      "dest": "/meta.js",
-      "headers": {
-        "Content-Type": "text/javascript"
-      }
-    },
-    {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/$1"
     }
   ]
 }
