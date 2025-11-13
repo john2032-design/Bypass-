@@ -5,6 +5,7 @@ import json
 import traceback
 
 app = Flask(**name**, static_folder=“static”, template_folder=“templates”)
+app.config[‘PROPAGATE_EXCEPTIONS’] = True
 
 SUPPORTED_LIST = [
 “https://mboost.me/*”,
