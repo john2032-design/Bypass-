@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFK Bypasser Helper
 // @namespace    https://afk-bypasser.vercel.app
-// @version      1.2
+// @version      1.3
 // @description  Automatically redirects supported shorteners to AFK Bypasser
 // @author       AFK Bypasser
 // @match        *://mobile.codex.lol/*
@@ -64,7 +64,8 @@
 (function() {
     'use strict';
     const bypasserSite = "https://afk-bypasser.vercel.app";
-    if (window.location.href.includes(bypasserSite.replace('https://', ''))) {
+    
+    if (window.location.href.includes('afk-bypasser.vercel.app')) {
         const urlParams = new URLSearchParams(window.location.search);
         const urlParam = urlParams.get('url');
         if (urlParam) {
@@ -79,24 +80,20 @@
             const bypassBtn = document.querySelector('#bypassBtn');
             if (urlInput && bypassBtn) {
                 urlInput.value = decodeURIComponent(urlParam);
-                setTimeout(() => {
-                    bypassBtn.click();
-                    let checkCount = 0;
-                    const maxChecks = 40;
-                    const checkResult = setInterval(() => {
-                        checkCount++;
-                        const resultUrl = document.querySelector('#resultUrl');
-                        if (resultUrl && resultUrl.style.display !== 'none' && resultUrl.href) {
-                            setTimeout(() => {
-                                window.location.href = resultUrl.href;
-                            }, 1000);
-                            clearInterval(checkResult);
-                        }
-                        if (checkCount >= maxChecks) {
-                            clearInterval(checkResult);
-                        }
-                    }, 500);
-                }, 1000);
+                bypassBtn.click();
+                let checkCount = 0;
+                const maxChecks = 40;
+                const checkResult = setInterval(() => {
+                    checkCount++;
+                    const resultUrl = document.querySelector('#resultUrl');
+                    if (resultUrl && resultUrl.style.display !== 'none' && resultUrl.href) {
+                        window.location.href = resultUrl.href;
+                        clearInterval(checkResult);
+                    }
+                    if (checkCount >= maxChecks) {
+                        clearInterval(checkResult);
+                    }
+                }, 500);
             }
         }
     } else {
