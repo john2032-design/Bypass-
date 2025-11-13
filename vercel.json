@@ -26,7 +26,10 @@
     },
     {
       "src": "/meta.js",
-      "dest": "/meta.js"
+      "dest": "/meta.js",
+      "headers": {
+        "Content-Type": "text/plain"
+      }
     }
   ]
 }
