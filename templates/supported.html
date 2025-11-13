@@ -1,9 +1,10 @@
 <!doctype html>
+
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AFK™.lol Supported Links</title>
+  <title>Supported Links - AFK™.lol Bypass</title>
   <link rel="icon" href="https://i.ibb.co/ks0qXqqY/B57-FBD3-E-489-E-4-F0-D-A5-C0-08017-DA44-C4-E.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +15,7 @@
   <div class="grain"></div>
   <div class="glow glow-1"></div>
   <div class="glow glow-2"></div>
+
   <header class="site-header" role="banner">
     <a class="brand" href="/">
       <img class="brand-icon" src="https://i.ibb.co/ks0qXqqY/B57-FBD3-E-489-E-4-F0-D-A5-C0-08017-DA44-C4-E.png" alt="AFK logo">
@@ -23,40 +25,67 @@
       </div>
     </a>
     <nav class="nav-menu">
-      <button class="nav-btn" onclick="location.href='/'">Bypass</button>
-      <button class="nav-btn active">Supported</button>
+      <a href="/" class="nav-btn">Bypass</a>
+      <a href="/supported" class="nav-btn active">Supported</a>
     </nav>
   </header>
+
   <main class="page" role="main">
     <div class="supported-container">
       <div class="title-group">
         <h1 class="page-title">Supported Links</h1>
         <div class="title-accent"></div>
       </div>
+      <p class="supported-description">These are all the link shorteners and services that our bypass API currently supports.</p>
       <div class="glass-card supported-card">
         <div class="card-glow"></div>
-        <div class="supported-list" id="supported-list"></div>
+        <div class="supported-list">
+          <div class="supported-item">mboost.me</div>
+          <div class="supported-item">deltaios-executor.com</div>
+          <div class="supported-item">krnl-ios.com</div>
+          <div class="supported-item">auth.platoboost.app</div>
+          <div class="supported-item">auth.platoboost.net</div>
+          <div class="supported-item">loot-link.com</div>
+          <div class="supported-item">lootlink.org</div>
+          <div class="supported-item">lootlinks.co</div>
+          <div class="supported-item">lootdest.info</div>
+          <div class="supported-item">lootdest.org</div>
+          <div class="supported-item">lootdest.com</div>
+          <div class="supported-item">links-loot.com</div>
+          <div class="supported-item">loot-links.com</div>
+          <div class="supported-item">best-links.org</div>
+          <div class="supported-item">lootlinks.com</div>
+          <div class="supported-item">loot-labs.com</div>
+          <div class="supported-item">lootlabs.com</div>
+          <div class="supported-item">pandadevelopment.net</div>
+          <div class="supported-item">krnl.cat</div>
+          <div class="supported-item">lockr.so</div>
+          <div class="supported-item">link-unlock.com</div>
+          <div class="supported-item">direct-link.net</div>
+          <div class="supported-item">link-target.net</div>
+          <div class="supported-item">link-to.net</div>
+          <div class="supported-item">link-center.net</div>
+          <div class="supported-item">link-hub.net</div>
+          <div class="supported-item">up-to-down.net</div>
+          <div class="supported-item">linkvertise.com</div>
+          <div class="supported-item">sub2get.com</div>
+          <div class="supported-item">sub4unlock.com</div>
+          <div class="supported-item">sub2unlock.net</div>
+          <div class="supported-item">sub2unlock.com</div>
+          <div class="supported-item">rekonise.com</div>
+          <div class="supported-item">rkns.link</div>
+          <div class="supported-item">rekonise.org</div>
+          <div class="supported-item">overdrivehub.xyz</div>
+        </div>
       </div>
     </div>
   </main>
+
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <span class="footer-dot"></span>
-      AFK™.lol Bypasser - Supported Links
+      AFK™.lol Bypasser - Bypass Links
     </div>
   </footer>
-  <script>
-    const MATCH_LIST = {{ match_list | tojson }};
-    const container = document.getElementById('supported-list');
-    if (Array.isArray(MATCH_LIST)) {
-      MATCH_LIST.forEach(item => {
-        const host = item.replace(/^https?:\/\//i, '').replace(/\*$/,'');
-        const el = document.createElement('div');
-        el.className = 'supported-item';
-        el.textContent = host;
-        container.appendChild(el);
-      });
-    }
-  </script>
 </body>
 </html>
