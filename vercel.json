@@ -3,10 +3,8 @@
   "functions": {},
   "routes": [
     {
-      "src": "/meta.js",
-      "headers": {
-        "Content-Type": "application/javascript"
-      }
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
