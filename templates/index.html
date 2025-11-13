@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -7,48 +8,97 @@
   <link rel="icon" href="https://i.ibb.co/ks0qXqqY/B57-FBD3-E-489-E-4-F0-D-A5-C0-08017-DA44-C4-E.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
+  <div class="grain"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
   <header class="site-header" role="banner">
     <a class="brand" href="/">
       <img class="brand-icon" src="https://i.ibb.co/ks0qXqqY/B57-FBD3-E-489-E-4-F0-D-A5-C0-08017-DA44-C4-E.png" alt="AFK logo">
-      <span class="brand-text">AFK™.lol</span>
+      <div class="brand-stack">
+        <span class="brand-text">AFK™.lol</span>
+        <span class="brand-sub">Bypass</span>
+      </div>
     </a>
   </header>
+
   <main class="page" role="main">
-    <div class="hero">
-      <img class="hero-img" src="https://i.ibb.co/ks0qXqqY/B57-FBD3-E-489-E-4-F0-D-A5-C0-08017-DA44-C4-E.png" alt="AFK hero">
-    </div>
-    <div class="container">
-      <div class="card" aria-labelledby="title">
-        <h1 id="title">AFK™.lol Bypass</h1>
-        <p class="lead">Paste a supported link below and click <strong>Bypass</strong>. Keyboard-first UX and robust sanitization.</p>
-        <form id="bypass-form" novalidate>
-          <div class="input-row">
-            <input id="url-input" class="field" type="url" name="url" placeholder="https://example.com/..." autocomplete="off" required>
-            <button id="bypass-btn" class="btn primary" type="submit">Bypass</button>
-          </div>
-          <div id="validation" class="msg" role="status" aria-live="polite"></div>
-        </form>
-        <section id="result-area" aria-live="polite" class="result card-hidden">
-          <h2 class="result-title">Result</h2>
-          <div id="result-content" class="result-content"></div>
-          <div id="redirect-controls" class="redirect-controls card-hidden">
-            <div id="countdown-text">Redirecting in <span id="countdown">15</span>s</div>
-            <button id="cancel-redirect" class="btn secondary">Cancel (Esc)</button>
-          </div>
-        </section>
+    <div class="layout">
+      <section class="left-panel">
+        <div class="title-group">
+          <h1 class="page-title">AFK™.lol Bypass</h1>
+          <div class="title-accent"></div>
+        </div>
+        <p class="subtitle">Paste a supported link below and click <strong>Bypass</strong>. Keyboard-first UX.</p>
+
+```
+    <form id="bypass-form" class="form" novalidate>
+      <div class="input-wrapper">
+        <div class="input-row">
+          <input id="url-input" class="field" type="url" name="url" placeholder="https://example.com/..." autocomplete="off" required>
+          <button id="bypass-btn" class="btn primary" type="submit">
+            <span class="btn-text">Bypass</span>
+            <span class="btn-icon">→</span>
+          </button>
+        </div>
+        <div class="input-border"></div>
+      </div>
+      <div id="validation" class="msg" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <aside class="right-panel">
+    <div class="glass-card result-card card-hidden" id="result-area" aria-live="polite">
+      <div class="card-glow"></div>
+      <div class="result-head">
+        <div class="result-badge">
+          <span class="badge-dot"></span>
+          <span class="result-title">Result</span>
+        </div>
+        <div class="result-actions" id="result-actions"></div>
+      </div>
+      <div id="result-content" class="result-content"></div>
+      <div id="redirect-controls" class="redirect-controls card-hidden">
+        <div class="countdown-wrapper">
+          <div class="countdown-spinner"></div>
+          <div id="countdown-text">Redirecting in <span id="countdown">15</span>s</div>
+        </div>
+        <button id="cancel-redirect" class="btn secondary">Cancel (Esc)</button>
       </div>
     </div>
+
+    <div class="glass-card info-card">
+      <div class="card-glow"></div>
+      <div class="info-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="info-title">How it works</div>
+      <div class="info-body">This site calls a central bypass API. The userscript shows a wait overlay and redirects here so the request is made server-side.</div>
+    </div>
+  </aside>
+</div>
+```
+
   </main>
+
   <footer class="site-footer" role="contentinfo">
-    <div class="footer-inner">Built for developers · Accessible · Secure</div>
+    <div class="footer-inner">
+      <span class="footer-dot"></span>
+      Built for developers · Accessible · Secure
+    </div>
   </footer>
+
   <script>
     window.CANONICAL_MATCH_LIST = {{ match_list | tojson }};
   </script>
+
   <script src="/static/js/app.js"></script>
+
 </body>
 </html>
