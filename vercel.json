@@ -1,6 +1,7 @@
 {
   "version": 2,
-  "functions": {},
+  "buildCommand": null,
+  "outputDirectory": ".",
   "routes": [
     {
       "src": "/(.*)",
