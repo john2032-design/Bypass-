@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AFK™.lol Supported Links</title>
+  <link rel="icon" href="https://i.ibb.co/ks0qXqqY/B57-FBD3-E-489-E-4-F0-D-A5-C0-08017-DA44-C4-E.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <header class="site-header" role="banner">
+    <a class="brand" href="/">
+      <img class="brand-icon" src="https://i.ibb.co/ks0qXqqY/B57-FBD3-E-489-E-4-F0-D-A5-C0-08017-DA44-C4-E.png" alt="AFK logo">
+      <div class="brand-stack">
+        <span class="brand-text">AFK™.lol</span>
+        <span class="brand-sub">Bypass</span>
+      </div>
+    </a>
+    <nav class="nav-menu">
+      <button class="nav-btn" onclick="location.href='/'">Bypass</button>
+      <button class="nav-btn active">Supported</button>
+    </nav>
+  </header>
+  <main class="page" role="main">
+    <div class="supported-container">
+      <div class="title-group">
+        <h1 class="page-title">Supported Links</h1>
+        <div class="title-accent"></div>
+      </div>
+      <div class="glass-card supported-card">
+        <div class="card-glow"></div>
+        <div class="supported-list" id="supported-list"></div>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <span class="footer-dot"></span>
+      AFK™.lol Bypasser - Supported Links
+    </div>
+  </footer>
+  <script>
+    const MATCH_LIST = {{ match_list | tojson }};
+    const container = document.getElementById('supported-list');
+    if (Array.isArray(MATCH_LIST)) {
+      MATCH_LIST.forEach(item => {
+        const host = item.replace(/^https?:\/\//i, '').replace(/\*$/,'');
+        const el = document.createElement('div');
+        el.className = 'supported-item';
+        el.textContent = host;
+        container.appendChild(el);
+      });
+    }
+  </script>
+</body>
+</html>
