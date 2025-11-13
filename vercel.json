@@ -7,7 +7,7 @@
       "use": "@vercel/static"
     },
     {
-      "src": "*.js", 
+      "src": "*.js",
       "use": "@vercel/static"
     }
   ],
@@ -21,8 +21,12 @@
       "dest": "/supported.html"
     },
     {
-      "src": "/(.*\\.user\\.js)",
-      "dest": "/$1"
+      "src": "/update",
+      "dest": "/update.html"
+    },
+    {
+      "src": "/meta.js",
+      "dest": "/meta.js"
     }
   ]
 }
