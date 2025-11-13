@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Modern URL bypass tool",
   "scripts": {
-    "build": "echo 'Static site - no build required'"
+    "build": "echo 'No build step needed'"
   },
   "keywords": ["bypass", "url", "shortener"],
   "author": "AFK Bypasser",
