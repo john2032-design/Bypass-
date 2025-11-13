@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -24,68 +25,69 @@
       </div>
     </a>
     <nav class="nav-menu">
-      <a class="nav-btn active" href="/">Bypass</a>
-      <a class="nav-btn" href="/supported">Supported</a>
+      <a href="/" class="nav-btn active">Bypass</a>
+      <a href="/supported" class="nav-btn">Supported</a>
     </nav>
   </header>
 
   <main class="page" role="main">
-    <div id="bypass-page" class="page-content">
-      <div class="layout">
-        <section class="left-panel">
-          <div class="title-group">
-            <h1 class="page-title">AFK™.lol Bypasser</h1>
-            <div class="title-accent"></div>
-          </div>
+    <div class="layout">
+      <section class="left-panel">
+        <div class="title-group">
+          <h1 class="page-title">AFK™.lol Bypasser</h1>
+          <div class="title-accent"></div>
+        </div>
 
-          <form id="bypass-form" class="form" novalidate>
-            <div class="input-wrapper">
-              <div class="input-row">
-                <input id="url-input" class="field" type="url" name="url" placeholder="https://example.com/..." autocomplete="off" required>
-                <button id="bypass-btn" class="btn primary" type="submit">
-                  <span class="btn-text">Bypass</span>
-                  <span class="btn-icon">→</span>
-                </button>
-              </div>
-              <div class="input-border"></div>
-            </div>
-            <div id="validation" class="msg" role="status" aria-live="polite"></div>
-          </form>
-        </section>
+```
+    <form id="bypass-form" class="form" novalidate>
+      <div class="input-wrapper">
+        <div class="input-row">
+          <input id="url-input" class="field" type="url" name="url" placeholder="https://example.com/..." autocomplete="off" required>
+          <button id="bypass-btn" class="btn primary" type="submit">
+            <span class="btn-text">Bypass</span>
+            <span class="btn-icon">→</span>
+          </button>
+        </div>
+        <div class="input-border"></div>
+      </div>
+      <div id="validation" class="msg" role="status" aria-live="polite"></div>
+    </form>
+  </section>
 
-        <aside class="right-panel">
-          <div class="glass-card result-card card-hidden" id="result-area" aria-live="polite">
-            <div class="card-glow"></div>
-            <div class="result-head">
-              <div class="result-badge">
-                <span class="badge-dot"></span>
-                <span class="result-title">Result</span>
-              </div>
-              <div class="result-actions" id="result-actions"></div>
-            </div>
-            <div id="result-content" class="result-content"></div>
-            <div id="redirect-controls" class="redirect-controls card-hidden">
-              <div class="countdown-wrapper">
-                <div class="countdown-spinner"></div>
-                <div id="countdown-text">Redirecting in <span id="countdown">15</span>s</div>
-              </div>
-              <button id="cancel-redirect" class="btn secondary">Cancel (Esc)</button>
-            </div>
-          </div>
-
-          <div class="glass-card info-card">
-            <div class="card-glow"></div>
-            <div class="info-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="info-title">How it works</div>
-            <div class="info-body">Paste a supported link above and click Bypass. The request is made server-side for reliability.</div>
-          </div>
-        </aside>
+  <aside class="right-panel">
+    <div class="glass-card result-card card-hidden" id="result-area" aria-live="polite">
+      <div class="card-glow"></div>
+      <div class="result-head">
+        <div class="result-badge">
+          <span class="badge-dot"></span>
+          <span class="result-title">Result</span>
+        </div>
+        <div class="result-actions" id="result-actions"></div>
+      </div>
+      <div id="result-content" class="result-content"></div>
+      <div id="redirect-controls" class="redirect-controls card-hidden">
+        <div class="countdown-wrapper">
+          <div class="countdown-spinner"></div>
+          <div id="countdown-text">Redirecting in <span id="countdown">15</span>s</div>
+        </div>
+        <button id="cancel-redirect" class="btn secondary">Cancel (Esc)</button>
       </div>
     </div>
+
+    <div class="glass-card info-card">
+      <div class="card-glow"></div>
+      <div class="info-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="info-title">How it works</div>
+      <div class="info-body">Paste a supported link above and click Bypass</div>
+    </div>
+  </aside>
+</div>
+```
+
   </main>
 
   <footer class="site-footer" role="contentinfo">
@@ -100,5 +102,6 @@
   </script>
 
   <script src="/static/js/app.js"></script>
+
 </body>
 </html>
