@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Modern URL bypass tool",
   "scripts": {
-    "build": "mkdir -p public && cp index.html public/ && cp supported.html public/ && cp afk-bypasser.user.js public/",
+    "build": "mkdir -p public && cp index.html public/ && cp supported.html public/ && [ -f afk-bypasser.user.js ] && cp afk-bypasser.user.js public/ || echo 'Userscript file not found, continuing build'",
     "dev": "python3 -m http.server 3000"
   },
   "keywords": ["bypass", "url", "shortener"],
