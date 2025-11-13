@@ -1,15 +1,14 @@
 {
   "name": "afk-bypasser",
   "version": "1.0.0",
-  "description": "AFK Bypasser - URL Shortener Bypass Service",
-  "main": "api/index.js",
+  "description": "Modern URL bypass tool",
   "scripts": {
-    "dev": "vercel dev"
+    "build": "mkdir -p public && cp index.html public/ && cp supported.html public/ && cp afk-bypasser.user.js public/",
+    "dev": "python3 -m http.server 3000"
   },
-  "dependencies": {
-    "axios": "^1.6.0"
-  },
-  "engines": {
-    "node": "22.x"
-  }
+  "keywords": ["bypass", "url", "shortener"],
+  "author": "AFK Bypasser",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
 }
