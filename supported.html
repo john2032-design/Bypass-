@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supported Services - AFK Bypasser</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">AFK Bypasser</h1>
+            <p class="tagline">Supported Services</p>
+        </header>
+
+        <main class="main-content">
+            <div class="supported-section glass">
+                <h2>Supported URL Shorteners & Services</h2>
+                <p class="supported-info">AFK Bypasser currently supports the following services. More are being added regularly.</p>
+                
+                <div class="services-grid" id="servicesGrid"></div>
+
+                <div class="total-count">
+                    Total supported services: <span id="totalCount">0</span>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <nav class="footer-nav">
+                <a href="/">Home</a>
+                <a href="/supported">Supported Services</a>
+            </nav>
+            <p>&copy; 2024 AFK Bypasser. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const supportedServices = [
+            "mobile.codex.lol", "Trigon", "rekonise", "linkvertise", "paster-so", "cuttlinks", 
+            "boost-ink-and-bst-gg", "keyguardian", "bstshrt", "nicuse-getkey", "bit.do", "bit.ly", 
+            "blox-script", "cl.gy", "cuty-cuttlinks", "getpolsec", "goo.gl", "is.gd", "ldnesfspublic", 
+            "link-hub.net", "link-unlock-complete", "link4m.com", "link4sub", "linkunlocker", "lockr", 
+            "mboost", "mediafire", "overdrivehub", "paste-drop", "pastebin", "pastes_io", "quartyz", 
+            "rebrand.ly", "rinku-pro", "rkns.link", "shorteners-and-direct", "shorter.me", "socialwolvez", 
+            "sub2get", "sub4unlock.com", "subfinal", "t.co", "t.ly", "tiny.cc", "tinylink.onl", 
+            "tinyurl.com", "tpi.li key-system", "v.gd", "work-ink", "ytsubme"
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const servicesGrid = document.getElementById('servicesGrid');
+            const totalCount = document.getElementById('totalCount');
+            
+            totalCount.textContent = supportedServices.length;
+            
+            supportedServices.forEach(service => {
+                const serviceElement = document.createElement('div');
+                serviceElement.className = 'service-item';
+                serviceElement.textContent = service;
+                servicesGrid.appendChild(serviceElement);
+            });
+        });
+    </script>
+</body>
+</html>
