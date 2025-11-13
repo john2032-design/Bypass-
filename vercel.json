@@ -28,8 +28,12 @@
       "src": "/meta.js",
       "dest": "/meta.js",
       "headers": {
-        "Content-Type": "text/plain"
+        "Content-Type": "text/javascript"
       }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
