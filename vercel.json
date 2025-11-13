@@ -1,17 +1,12 @@
 {
   "version": 2,
-  "buildCommand": "echo 'No build needed'",
-  "outputDirectory": ".",
+  "functions": {},
   "routes": [
     {
       "src": "/meta.js",
       "headers": {
         "Content-Type": "application/javascript"
       }
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
     }
   ]
 }
