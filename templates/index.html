@@ -24,64 +24,119 @@
         <span class="brand-sub">Bypass</span>
       </div>
     </a>
+    <nav class="nav-menu">
+      <button class="nav-btn active" data-page="bypass">Bypass</button>
+      <button class="nav-btn" data-page="supported">Supported</button>
+    </nav>
   </header>
 
   <main class="page" role="main">
-    <div class="layout">
-      <section class="left-panel">
-        <div class="title-group">
-          <h1 class="page-title">AFK™.lol Bypass</h1>
-          <div class="title-accent"></div>
-        </div>
-        <p class="subtitle">Paste a supported link below and click <strong>Bypass</strong>. Keyboard-first UX.</p>
+    <div id="bypass-page" class="page-content">
+      <div class="layout">
+        <section class="left-panel">
+          <div class="title-group">
+            <h1 class="page-title">AFK™.lol Bypasser</h1>
+            <div class="title-accent"></div>
+          </div>
 
 ```
-    <form id="bypass-form" class="form" novalidate>
-      <div class="input-wrapper">
-        <div class="input-row">
-          <input id="url-input" class="field" type="url" name="url" placeholder="https://example.com/..." autocomplete="off" required>
-          <button id="bypass-btn" class="btn primary" type="submit">
-            <span class="btn-text">Bypass</span>
-            <span class="btn-icon">→</span>
-          </button>
+      <form id="bypass-form" class="form" novalidate>
+        <div class="input-wrapper">
+          <div class="input-row">
+            <input id="url-input" class="field" type="url" name="url" placeholder="https://example.com/..." autocomplete="off" required>
+            <button id="bypass-btn" class="btn primary" type="submit">
+              <span class="btn-text">Bypass</span>
+              <span class="btn-icon">→</span>
+            </button>
+          </div>
+          <div class="input-border"></div>
         </div>
-        <div class="input-border"></div>
-      </div>
-      <div id="validation" class="msg" role="status" aria-live="polite"></div>
-    </form>
-  </section>
+        <div id="validation" class="msg" role="status" aria-live="polite"></div>
+      </form>
+    </section>
 
-  <aside class="right-panel">
-    <div class="glass-card result-card card-hidden" id="result-area" aria-live="polite">
-      <div class="card-glow"></div>
-      <div class="result-head">
-        <div class="result-badge">
-          <span class="badge-dot"></span>
-          <span class="result-title">Result</span>
+    <aside class="right-panel">
+      <div class="glass-card result-card card-hidden" id="result-area" aria-live="polite">
+        <div class="card-glow"></div>
+        <div class="result-head">
+          <div class="result-badge">
+            <span class="badge-dot"></span>
+            <span class="result-title">Result</span>
+          </div>
+          <div class="result-actions" id="result-actions"></div>
         </div>
-        <div class="result-actions" id="result-actions"></div>
+        <div id="result-content" class="result-content"></div>
+        <div id="redirect-controls" class="redirect-controls card-hidden">
+          <div class="countdown-wrapper">
+            <div class="countdown-spinner"></div>
+            <div id="countdown-text">Redirecting in <span id="countdown">15</span>s</div>
+          </div>
+          <button id="cancel-redirect" class="btn secondary">Cancel (Esc)</button>
+        </div>
       </div>
-      <div id="result-content" class="result-content"></div>
-      <div id="redirect-controls" class="redirect-controls card-hidden">
-        <div class="countdown-wrapper">
-          <div class="countdown-spinner"></div>
-          <div id="countdown-text">Redirecting in <span id="countdown">15</span>s</div>
+
+      <div class="glass-card info-card">
+        <div class="card-glow"></div>
+        <div class="info-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
-        <button id="cancel-redirect" class="btn secondary">Cancel (Esc)</button>
+        <div class="info-title">How it works</div>
+        <div class="info-body">Paste a supported link above and click Bypass</div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div id="supported-page" class="page-content card-hidden">
+  <div class="supported-container">
+    <div class="title-group">
+      <h1 class="page-title">Supported Links</h1>
+      <div class="title-accent"></div>
+    </div>
+    <div class="glass-card supported-card">
+      <div class="card-glow"></div>
+      <div class="supported-list">
+        <div class="supported-item">mboost.me</div>
+        <div class="supported-item">deltaios-executor.com</div>
+        <div class="supported-item">krnl-ios.com</div>
+        <div class="supported-item">auth.platoboost.app</div>
+        <div class="supported-item">auth.platoboost.net</div>
+        <div class="supported-item">loot-link.com</div>
+        <div class="supported-item">lootlink.org</div>
+        <div class="supported-item">lootlinks.co</div>
+        <div class="supported-item">lootdest.info</div>
+        <div class="supported-item">lootdest.org</div>
+        <div class="supported-item">lootdest.com</div>
+        <div class="supported-item">links-loot.com</div>
+        <div class="supported-item">loot-links.com</div>
+        <div class="supported-item">best-links.org</div>
+        <div class="supported-item">lootlinks.com</div>
+        <div class="supported-item">loot-labs.com</div>
+        <div class="supported-item">lootlabs.com</div>
+        <div class="supported-item">pandadevelopment.net</div>
+        <div class="supported-item">krnl.cat</div>
+        <div class="supported-item">lockr.so</div>
+        <div class="supported-item">link-unlock.com</div>
+        <div class="supported-item">direct-link.net</div>
+        <div class="supported-item">link-target.net</div>
+        <div class="supported-item">link-to.net</div>
+        <div class="supported-item">link-center.net</div>
+        <div class="supported-item">link-hub.net</div>
+        <div class="supported-item">up-to-down.net</div>
+        <div class="supported-item">linkvertise.com</div>
+        <div class="supported-item">sub2get.com</div>
+        <div class="supported-item">sub4unlock.com</div>
+        <div class="supported-item">sub2unlock.net</div>
+        <div class="supported-item">sub2unlock.com</div>
+        <div class="supported-item">rekonise.com</div>
+        <div class="supported-item">rkns.link</div>
+        <div class="supported-item">rekonise.org</div>
+        <div class="supported-item">overdrivehub.xyz</div>
       </div>
     </div>
-
-    <div class="glass-card info-card">
-      <div class="card-glow"></div>
-      <div class="info-icon">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="info-title">How it works</div>
-      <div class="info-body">This site calls a central bypass API. The userscript shows a wait overlay and redirects here so the request is made server-side.</div>
-    </div>
-  </aside>
+  </div>
 </div>
 ```
 
@@ -90,7 +145,7 @@
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <span class="footer-dot"></span>
-      Built for developers · Accessible · Secure
+      AFK™.lol Bypasser - Bypass Links
     </div>
   </footer>
 
