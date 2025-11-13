@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFK Bypasser Helper
 // @namespace    https://afk-bypasser.vercel.app
-// @version      1.4
+// @version      1.3
 // @description  Automatically redirects supported shorteners to AFK Bypasser
 // @author       AFK Bypasser
 // @match        *://mobile.codex.lol/*
@@ -57,13 +57,40 @@
 // @match        *://v.gd/*
 // @match        *://*work.ink/*
 // @match        *://*ytsubme.com/*
-// @grant        none
+// @updateURL    https://afk-bypasser.vercel.app/meta.js
+// @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js
+// @grant        GM_xmlhttpRequest
 // @run-at       document-start
 // ==/UserScript==
 
 (function() {
     'use strict';
     const bypasserSite = "https://afk-bypasser.vercel.app";
+    const currentVersion = "1.3";
+    
+    function checkForUpdate() {
+        if (window.location.href.includes('afk-bypasser.vercel.app')) return;
+        
+        GM_xmlhttpRequest({
+            method: "GET",
+            url: "https://afk-bypasser.vercel.app/meta.js",
+            onload: function(response) {
+                try {
+                    const scriptContent = response.responseText;
+                    const versionMatch = scriptContent.match(/@version\s+(\d+\.\d+)/);
+                    if (versionMatch && versionMatch[1]) {
+                        const latestVersion = versionMatch[1];
+                        if (latestVersion !== currentVersion) {
+                            window.location.href = `${bypasserSite}/update?version=${latestVersion}`;
+                        }
+                    }
+                } catch (e) {
+                }
+            },
+            onerror: function() {
+            }
+        });
+    }
     
     if (window.location.href.includes('afk-bypasser.vercel.app')) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -97,6 +124,8 @@
             }
         }
     } else {
+        checkForUpdate();
+        
         const overlay = document.createElement('div');
         overlay.id = 'afk-bypasser-overlay';
         overlay.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,14,23,0.95);backdrop-filter:blur(10px);z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;font-family:'Segoe UI',sans-serif;`;
