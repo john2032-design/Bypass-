@@ -1,11 +1,8 @@
-from flask import Flask, render_template, jsonify, request, send_from_directory
+from flask import Flask, render_template, jsonify, request
 from urllib.parse import urlparse
 import os
-import json
-import traceback
 
-app = Flask(**name**, static_folder=“static”, template_folder=“templates”)
-app.config[‘PROPAGATE_EXCEPTIONS’] = True
+app = Flask(**name**)
 
 SUPPORTED_LIST = [
 “https://mboost.me/*”,
@@ -58,23 +55,14 @@ return False
 
 @app.route(”/”)
 def index():
-try:
 return render_template(“index.html”, match_list=SUPPORTED_LIST)
-except Exception:
-print(traceback.format_exc())
-return “Internal Server Error”, 500
 
 @app.route(”/supported”)
 def supported():
-try:
 return render_template(“supported.html”, match_list=SUPPORTED_LIST)
-except Exception:
-print(traceback.format_exc())
-return “Internal Server Error”, 500
 
 @app.route(”/api/bypass”)
 def api_bypass():
-try:
 url = request.args.get(“url”)
 if not url:
 return jsonify({“status”:“error”,“message”:“No URL provided.”}), 400
@@ -84,14 +72,3 @@ return jsonify({“status”:“error”,“message”:“Invalid URL.”}), 400
 if not is_supported_url(url):
 return jsonify({“status”:“error”,“message”:“Unsupported link.”}), 400
 return jsonify({“status”:“success”,“result”:url + “?bypassed=true”})
-except Exception:
-print(traceback.format_exc())
-return jsonify({“status”:“error”,“message”:“Server error.”}), 500
-
-@app.route(”/static/<path:path>”)
-def send_static(path):
-return send_from_directory(“static”, path)
-
-if **name** == “**main**”:
-port = int(os.environ.get(“PORT”, 5000))
-app.run(host=“0.0.0.0”, port=port)
