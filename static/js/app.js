@@ -10,6 +10,33 @@ const countdownEl = document.getElementById(‘countdown’);
 const cancelBtn = document.getElementById(‘cancel-redirect’);
 const BYPASS_API = ‘/api/bypass’;
 
+// Navigation
+const navBtns = document.querySelectorAll(’.nav-btn’);
+const bypassPage = document.getElementById(‘bypass-page’);
+const supportedPage = document.getElementById(‘supported-page’);
+
+navBtns.forEach(btn => {
+btn.addEventListener(‘click’, () => {
+const page = btn.dataset.page;
+
+```
+  // Update active state
+  navBtns.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  
+  // Show/hide pages
+  if (page === 'bypass') {
+    bypassPage.classList.remove('card-hidden');
+    supportedPage.classList.add('card-hidden');
+  } else if (page === 'supported') {
+    bypassPage.classList.add('card-hidden');
+    supportedPage.classList.remove('card-hidden');
+  }
+});
+```
+
+});
+
 function patternToRegex(p) {
 const esc = p.replace(/[.+^${}()|[]\]/g, ‘\$&’).replace(/\*/g, ‘.*’);
 return new RegExp(’^’ + esc + ‘$’, ‘i’);
