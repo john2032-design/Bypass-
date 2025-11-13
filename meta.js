@@ -4,6 +4,7 @@
 // @version      1.4
 // @description  Automatically redirects supported shorteners to AFK Bypasser
 // @author       AFK Bypasser
+// @icon         https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png
 // @match        *://mobile.codex.lol/*
 // @match        *://*trigon/*
 // @match        *://*rekonise.com/*
