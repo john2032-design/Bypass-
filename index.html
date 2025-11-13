@@ -400,6 +400,9 @@
             const copyBtn = document.getElementById('copyBtn');
             const redirectBtn = document.getElementById('redirectBtn');
             
+            const trwApiKey = "e256fa8b-7df7-4264-8bbd-2d142e2d0a45";
+            const trwDomains = ["krnl.cat", "keyrblx.com", "keyguardian.org"];
+            
             const urlParams = new URLSearchParams(window.location.search);
             const urlParam = urlParams.get('url');
             
@@ -408,6 +411,91 @@
                 setTimeout(() => {
                     bypassBtn.click();
                 }, 100);
+            }
+            
+            function shouldUseTRW(url) {
+                try {
+                    const domain = new URL(url).hostname.toLowerCase();
+                    return trwDomains.some(trwDomain => domain.includes(trwDomain));
+                } catch (e) {
+                    return false;
+                }
+            }
+            
+            async function trwBypass(url) {
+                try {
+                    const bypassResponse = await fetch(`https://trw.lat/api/v2/bypass?url=${encodeURIComponent(url)}`, {
+                        headers: {
+                            'x-api-key': trwApiKey
+                        }
+                    });
+                    
+                    if (!bypassResponse.ok) {
+                        throw new Error(`TRW API error: ${bypassResponse.status}`);
+                    }
+                    
+                    const bypassData = await bypassResponse.json();
+                    
+                    if (bypassData.status !== "started" || !bypassData.ThreadID) {
+                        throw new Error('Invalid response from TRW API');
+                    }
+                    
+                    const threadId = bypassData.ThreadID;
+                    
+                    return new Promise((resolve, reject) => {
+                        let attempts = 0;
+                        const maxAttempts = 60;
+                        
+                        const checkThread = async () => {
+                            try {
+                                const checkResponse = await fetch(`https://trw.lat/api/v2/threadcheck?id=${threadId}`);
+                                
+                                if (!checkResponse.ok) {
+                                    throw new Error(`Thread check failed: ${checkResponse.status}`);
+                                }
+                                
+                                const checkData = await checkResponse.json();
+                                
+                                if (checkData.status === "Done" && checkData.success) {
+                                    resolve(checkData.result);
+                                } else if (checkData.status === "started" || checkData.status === "processing") {
+                                    attempts++;
+                                    if (attempts >= maxAttempts) {
+                                        reject(new Error('TRW bypass timeout - taking too long'));
+                                    } else {
+                                        setTimeout(checkThread, 500);
+                                    }
+                                } else {
+                                    reject(new Error(`TRW bypass failed: ${checkData.status}`));
+                                }
+                            } catch (err) {
+                                reject(err);
+                            }
+                        };
+                        
+                        checkThread();
+                    });
+                    
+                } catch (err) {
+                    throw new Error(`TRW bypass failed: ${err.message}`);
+                }
+            }
+            
+            async function originalBypass(url) {
+                const apiUrl = `https://afklol-api.vercel.app/bypass?url=${encodeURIComponent(url)}`;
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.text();
+                
+                if (!data || data.trim() === '') {
+                    throw new Error('Empty response from API');
+                }
+                
+                return data;
             }
             
             bypassBtn.addEventListener('click', async function() {
@@ -436,34 +524,32 @@
                 bypassBtn.innerHTML = '<span>Processing...</span>';
                 
                 try {
-                    const apiUrl = `https://afklol-api.vercel.app/bypass?url=${encodeURIComponent(url)}`;
-                    const response = await fetch(apiUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error(`API error: ${response.status} ${response.statusText}`);
-                    }
-                    
-                    const data = await response.text();
-                    
-                    if (!data || data.trim() === '') {
-                        throw new Error('Empty response from API');
-                    }
-                    
-                    let result = data;
+                    let result;
                     let processTime = '';
+                    const startTime = Date.now();
+                    
+                    if (shouldUseTRW(url)) {
+                        loading.querySelector('p').textContent = 'Processing with TRW API (this may take a few seconds)...';
+                        result = await trwBypass(url);
+                    } else {
+                        loading.querySelector('p').textContent = 'Processing your request...';
+                        result = await originalBypass(url);
+                    }
+                    
+                    const endTime = Date.now();
+                    processTime = ` (${((endTime - startTime) / 1000).toFixed(2)}s)`;
+                    
+                    let finalResult = result;
                     
                     try {
-                        const jsonData = JSON.parse(data);
+                        const jsonData = JSON.parse(result);
                         if (jsonData.result) {
-                            result = jsonData.result;
-                        }
-                        if (jsonData.time) {
-                            processTime = ` (${jsonData.time}s)`;
+                            finalResult = jsonData.result;
                         }
                     } catch (e) {
                     }
                     
-                    displayResult(result);
+                    displayResult(finalResult);
                     showSuccess(`URL processed successfully!${processTime}`);
                     
                 } catch (err) {
@@ -473,6 +559,7 @@
                     loading.style.display = 'none';
                     bypassBtn.disabled = false;
                     bypassBtn.innerHTML = '<span>Bypass</span>';
+                    loading.querySelector('p').textContent = 'Processing your request...';
                 }
             });
             
