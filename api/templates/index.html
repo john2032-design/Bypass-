@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AFK™.lol Bypass</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <main class="page">
+    <div class="card" role="main" aria-labelledby="title">
+      <div class="avatar" aria-hidden="true">
+        <img src="/static/img/icon.png" alt="" />
+      </div>
+      <h1 id="title">AFK™.lol Bypass</h1>
+      <p class="lead">Paste a supported link below and click <strong>Bypass</strong>. Designed for developers — keyboard-first.</p>
+      <form id="bypass-form" novalidate>
+        <div class="input-row">
+          <input id="url-input" class="field" type="url" name="url" placeholder="https://example.com/..." autocomplete="off" required />
+          <button id="bypass-btn" class="btn primary" type="submit">Bypass</button>
+        </div>
+        <div id="validation" class="msg" role="status" aria-live="polite"></div>
+      </form>
+      <section id="result-area" aria-live="polite" class="result card-hidden">
+        <h2 class="result-title">Result</h2>
+        <div id="result-content" class="result-content"></div>
+        <div id="redirect-controls" class="redirect-controls card-hidden">
+          <div id="countdown-text">Redirecting in <span id="countdown">15</span>s</div>
+          <button id="cancel-redirect" class="btn secondary">Cancel (Esc)</button>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script>
+    window.CANONICAL_MATCH_LIST = {{ match_list | tojson }};
+  </script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
