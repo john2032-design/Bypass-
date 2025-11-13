@@ -1,6 +1,63 @@
-{
-  "version": "1.4",
-  "updateUrl": "https://afk-bypasser.vercel.app/update?version=1.3",
-  "downloadUrl": "https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js",
-  "changelog": "Added auto-update feature and improved compatibility"
-}
+// ==UserScript==
+// @name         AFK Bypasser Helper
+// @namespace    https://afk-bypasser.vercel.app
+// @version      1.4
+// @description  Automatically redirects supported shorteners to AFK Bypasser
+// @author       AFK Bypasser
+// @match        *://mobile.codex.lol/*
+// @match        *://*trigon/*
+// @match        *://*rekonise.com/*
+// @match        *://*linkvertise.com/*
+// @match        *://*paster.so/*
+// @match        *://*cuttlinks.com/*
+// @match        *://*boost.ink/*
+// @match        *://*bst.gg/*
+// @match        *://*keyguardian.net/*
+// @match        *://*bstshrt.com/*
+// @match        *://*nicuse.com/*
+// @match        *://*getkey.xyz/*
+// @match        *://bit.do/*
+// @match        *://bit.ly/*
+// @match        *://*blox-script.com/*
+// @match        *://cl.gy/*
+// @match        *://*cuty.io/*
+// @match        *://*cuttlinks.com/*
+// @match        *://*getpolsec.com/*
+// @match        *://goo.gl/*
+// @match        *://is.gd/*
+// @match        *://*ldnesfs.com/*
+// @match        *://*link-hub.net/*
+// @match        *://*link-unlock.com/*
+// @match        *://*link4m.com/*
+// @match        *://*link4sub.com/*
+// @match        *://*linkunlocker.com/*
+// @match        *://*lockr.xyz/*
+// @match        *://*mboost.me/*
+// @match        *://mediafire.com/*
+// @match        *://*overdrivehub.com/*
+// @match        *://*paste.drop/*
+// @match        *://pastebin.com/*
+// @match        *://*pastes.io/*
+// @match        *://*quartyz.com/*
+// @match        *://rebrand.ly/*
+// @match        *://*rinku.pro/*
+// @match        *://*rkns.link/*
+// @match        *://*shorteners-and-direct.com/*
+// @match        *://*shorter.me/*
+// @match        *://*socialwolvez.com/*
+// @match        *://*sub2get.com/*
+// @match        *://*sub4unlock.com/*
+// @match        *://*subfinal.com/*
+// @match        *://t.co/*
+// @match        *://t.ly/*
+// @match        *://tiny.cc/*
+// @match        *://*tinylink.onl/*
+// @match        *://tinyurl.com/*
+// @match        *://*tpi.li/*
+// @match        *://v.gd/*
+// @match        *://*work.ink/*
+// @match        *://*ytsubme.com/*
+// @updateURL    https://afk-bypasser.vercel.app/meta.js
+// @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js
+// @grant        none
+// ==/UserScript==
