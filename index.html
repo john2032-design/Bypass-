@@ -13,7 +13,6 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
-
         :root {
             --primary: #0a0e17;
             --secondary: #0f172a;
@@ -27,7 +26,6 @@
             --error: #ef4444;
             --success: #10b981;
         }
-
         body {
             background: linear-gradient(135deg, #0a0e17 0%, #0f172a 100%);
             color: #f8fafc;
@@ -38,14 +36,12 @@
             align-items: center;
             line-height: 1.6;
         }
-
         .container {
             max-width: 800px;
             width: 100%;
             margin: 0 auto;
             padding: 20px;
         }
-
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -60,19 +56,16 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-
         .nav-left {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-
         .nav-right {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
-
         .nav-btn {
             padding: 10px 20px;
             border-radius: 10px;
@@ -82,35 +75,28 @@
             transition: all 0.3s ease;
             white-space: nowrap;
         }
-
         .nav-primary {
             background: #3b82f6;
             color: white;
         }
-
         .nav-secondary {
             background: rgba(255, 255, 255, 0.1);
             color: #f8fafc;
         }
-
         .nav-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-
         .nav-primary:hover {
             background: #2563eb;
         }
-
         .nav-secondary:hover {
             background: rgba(255, 255, 255, 0.2);
         }
-
         header {
             text-align: center;
             margin-bottom: 40px;
         }
-
         .logo {
             width: 80px;
             height: 80px;
@@ -119,7 +105,6 @@
             border: 3px solid rgba(59, 130, 246, 0.3);
             box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
         }
-
         h1 {
             font-size: clamp(2.5rem, 5vw, 3.5rem);
             margin-bottom: 10px;
@@ -130,7 +115,6 @@
             font-weight: 800;
             letter-spacing: -0.5px;
         }
-
         .subtitle {
             color: #cbd5e1;
             font-size: clamp(1rem, 2vw, 1.2rem);
@@ -139,7 +123,6 @@
             margin-left: auto;
             margin-right: auto;
         }
-
         .card {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
@@ -149,13 +132,11 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             margin-bottom: 30px;
         }
-
         .input-group {
             display: flex;
             gap: 12px;
             margin-bottom: 20px;
         }
-
         input[type="url"] {
             flex: 1;
             padding: 16px 20px;
@@ -166,17 +147,14 @@
             font-size: 1rem;
             transition: all 0.3s ease;
         }
-
         input[type="url"]:focus {
             outline: none;
             border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
         }
-
         input[type="url"]::placeholder {
             color: #cbd5e1;
         }
-
         button {
             background: #3b82f6;
             color: white;
@@ -193,27 +171,22 @@
             gap: 8px;
             white-space: nowrap;
         }
-
         button:hover {
             background: #2563eb;
             transform: translateY(-2px);
         }
-
         button:active {
             transform: translateY(0);
         }
-
         button:disabled {
             background: #64748b;
             cursor: not-allowed;
             transform: none;
         }
-
         .result-container {
             margin-top: 20px;
             display: none;
         }
-
         .result-box {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 12px;
@@ -227,7 +200,6 @@
             justify-content: center;
             flex-direction: column;
         }
-
         .result-url {
             color: #3b82f6;
             text-decoration: none;
@@ -236,39 +208,32 @@
             text-align: center;
             font-size: 1.1rem;
         }
-
         .result-url:hover {
             text-decoration: underline;
         }
-
         .result-text {
             color: #f8fafc;
             font-size: 1rem;
             line-height: 1.5;
             text-align: center;
         }
-
         .action-buttons {
             display: flex;
             gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
         }
-
         .secondary-btn {
             background: rgba(255, 255, 255, 0.1);
         }
-
         .secondary-btn:hover {
             background: rgba(255, 255, 255, 0.2);
         }
-
         .loading {
             display: none;
             text-align: center;
             margin: 20px 0;
         }
-
         .spinner {
             width: 40px;
             height: 40px;
@@ -278,40 +243,33 @@
             animation: spin 1s linear infinite;
             margin: 0 auto 15px;
         }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
         .how-it-works {
             margin-top: 40px;
         }
-
         .how-it-works h2 {
             font-size: clamp(1.5rem, 3vw, 1.8rem);
             margin-bottom: 20px;
             color: #f8fafc;
             text-align: center;
         }
-
         .how-it-works p {
             margin-bottom: 15px;
             line-height: 1.6;
             color: #cbd5e1;
         }
-
         .steps {
             margin-left: 20px;
             margin-bottom: 20px;
         }
-
         .steps li {
             margin-bottom: 10px;
             line-height: 1.6;
             color: #cbd5e1;
         }
-
         .error {
             color: #ef4444;
             text-align: center;
@@ -322,7 +280,6 @@
             border-radius: 8px;
             border: 1px solid rgba(239, 68, 68, 0.2);
         }
-
         .success {
             color: #10b981;
             text-align: center;
@@ -333,52 +290,42 @@
             border-radius: 8px;
             border: 1px solid rgba(16, 185, 129, 0.2);
         }
-
         .footer {
             margin-top: 40px;
             text-align: center;
             color: #cbd5e1;
             font-size: 0.9rem;
         }
-
         @media (max-width: 768px) {
             .input-group {
                 flex-direction: column;
             }
-            
             .card {
                 padding: 20px;
             }
-            
             .action-buttons {
                 flex-direction: column;
             }
-            
             button {
                 width: 100%;
             }
-
             .navbar {
                 flex-direction: column;
                 gap: 15px;
                 text-align: center;
             }
-
             .nav-left, .nav-right {
                 justify-content: center;
                 width: 100%;
             }
         }
-
         @media (max-width: 480px) {
             body {
                 padding: 10px;
             }
-            
             .container {
                 padding: 10px;
             }
-
             .nav-btn {
                 padding: 8px 16px;
                 font-size: 0.85rem;
@@ -397,13 +344,11 @@
                 <a href="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js" target="_blank" class="nav-btn nav-secondary">Get Userscript</a>
             </div>
         </nav>
-        
         <header>
             <img src="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png" alt="AFK Bypasser Logo" class="logo">
             <h1>AFK Bypasser</h1>
             <p class="subtitle">Skip the wait times and get direct access to your content instantly</p>
         </header>
-        
         <main>
             <div class="card">
                 <div class="input-group">
@@ -412,15 +357,12 @@
                         <span>Bypass</span>
                     </button>
                 </div>
-                
                 <div class="loading" id="loading">
                     <div class="spinner" aria-hidden="true"></div>
                     <p>ℹ️ Processing (this may take a few seconds)</p>
                 </div>
-                
                 <div class="error" id="error" role="alert"></div>
                 <div class="success" id="success" role="status"></div>
-                
                 <div class="result-container" id="resultContainer">
                     <div class="result-box">
                         <a href="#" id="resultUrl" class="result-url" target="_blank" rel="noopener"></a>
@@ -436,26 +378,21 @@
                     </div>
                 </div>
             </div>
-            
             <div class="card how-it-works">
                 <h2>How It Works</h2>
                 <p>AFK Bypasser uses advanced APIs to help you skip unnecessary wait times and access content directly from supported URL shorteners.</p>
-                
                 <ol class="steps">
                     <li>Paste a URL from any of our supported services in the input field above</li>
                     <li>Click the "Bypass" button to process the URL through our system</li>
                     <li>Get direct access to your content or copy the bypassed result</li>
                 </ol>
-                
                 <p>Our service automatically processes your request and returns the direct content without additional steps or waiting periods.</p>
             </div>
         </main>
-
         <footer class="footer">
             <p>AFK Bypasser &copy; 2024 - Modern URL bypass solution</p>
         </footer>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const urlInput = document.getElementById('urlInput');
@@ -468,23 +405,18 @@
             const resultText = document.getElementById('resultText');
             const copyBtn = document.getElementById('copyBtn');
             const redirectBtn = document.getElementById('redirectBtn');
-            
             const trwApiKey = "e256fa8b-7df7-4264-8bbd-2d142e2d0a45";
-            
             const trwDomains = ["pandadevelopment.net", "krnl.cat", "keyrblx.com", "keyguardian.org"];
             const voltarOnlyDomains = ["work.ink", "key.valex.io", "zysume.net", "blox-script.com"];
             const voltarFirstDomains = ["krnl.cat"];
-            
             const urlParams = new URLSearchParams(window.location.search);
             const urlParam = urlParams.get('url');
-            
             if (urlParam) {
                 urlInput.value = decodeURIComponent(urlParam);
                 setTimeout(() => {
                     bypassBtn.click();
                 }, 100);
             }
-            
             function shouldUseVoltarOnly(url) {
                 try {
                     const domain = new URL(url).hostname.toLowerCase();
@@ -493,7 +425,6 @@
                     return false;
                 }
             }
-            
             function shouldUseVoltarFirst(url) {
                 try {
                     const domain = new URL(url).hostname.toLowerCase();
@@ -502,7 +433,6 @@
                     return false;
                 }
             }
-            
             function shouldUseTRW(url) {
                 try {
                     const domain = new URL(url).hostname.toLowerCase();
@@ -511,41 +441,60 @@
                     return false;
                 }
             }
-            
             async function voltarBypass(url) {
-                try {
-                    const response = await fetch('http://77.110.121.76:3000/bypass', {
-                        method: 'POST',
-                        headers: {
-                            'x-api-key': '',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            url: url,
-                            cache: true
-                        })
-                    });
-                    
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`Voltar API error: ${response.status} - ${errorText}`);
+                const endpoints = ['https://77.110.121.76:3000/bypass', 'http://77.110.121.76:3000/bypass'];
+                const voltarApiKey = '';
+                let lastError = null;
+                for (const apiUrl of endpoints) {
+                    const controller = new AbortController();
+                    const timeoutMs = 15000;
+                    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+                    try {
+                        const headers = { 'Content-Type': 'application/json' };
+                        if (typeof voltarApiKey === 'string' && voltarApiKey.trim()) {
+                            headers['x-api-key'] = voltarApiKey.trim();
+                        }
+                        const resp = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: headers,
+                            body: JSON.stringify({ url: url, cache: true }),
+                            signal: controller.signal,
+                            mode: 'cors',
+                            cache: 'no-store'
+                        });
+                        clearTimeout(timeoutId);
+                        if (!resp.ok) {
+                            const text = await resp.text().catch(() => '');
+                            lastError = new Error(`Voltar HTTP ${resp.status}: ${text || resp.statusText}`);
+                            continue;
+                        }
+                        const text = await resp.text();
+                        if (!text || text.trim() === '') {
+                            return text;
+                        }
+                        try {
+                            const data = JSON.parse(text);
+                            if (data && (data.status === 'success' || data.success === true)) {
+                                if (data.result) return data.result;
+                                if (data.url) return data.url;
+                                return data;
+                            }
+                            if (data && data.status === 'error') {
+                                lastError = new Error(data.message || 'Voltar returned error');
+                                continue;
+                            }
+                            if (data && Object.keys(data).length) return data;
+                        } catch (e) {
+                            return text;
+                        }
+                    } catch (err) {
+                        lastError = err;
+                        clearTimeout(timeoutId);
+                        continue;
                     }
-                    
-                    const data = await response.json();
-                    
-                    if (data.status === "success") {
-                        return data.result;
-                    } else if (data.status === "error") {
-                        throw new Error(data.message || "Voltar API error");
-                    } else {
-                        throw new Error('Invalid response from Voltar API');
-                    }
-                    
-                } catch (err) {
-                    throw new Error(`Voltar bypass failed: ${err.message}`);
                 }
+                throw new Error(lastError && lastError.message ? `Voltar bypass failed: ${lastError.message}` : 'Voltar bypass failed');
             }
-            
             async function trwBypass(url) {
                 try {
                     const bypassResponse = await fetch(`https://trw.lat/api/v2/bypass?url=${encodeURIComponent(url)}`, {
@@ -553,33 +502,24 @@
                             'x-api-key': trwApiKey
                         }
                     });
-                    
                     if (!bypassResponse.ok) {
                         throw new Error(`TRW API error: ${bypassResponse.status}`);
                     }
-                    
                     const bypassData = await bypassResponse.json();
-                    
                     if (bypassData.status !== "started" || !bypassData.ThreadID) {
                         throw new Error('Invalid response from TRW API');
                     }
-                    
                     const threadId = bypassData.ThreadID;
-                    
                     return new Promise((resolve, reject) => {
                         let attempts = 0;
                         const maxAttempts = 120;
-                        
                         const checkThread = async () => {
                             try {
                                 const checkResponse = await fetch(`https://trw.lat/api/v2/threadcheck?id=${threadId}`);
-                                
                                 if (!checkResponse.ok) {
                                     throw new Error(`Thread check failed: ${checkResponse.status}`);
                                 }
-                                
                                 const checkData = await checkResponse.json();
-                                
                                 if (checkData.status === "Done" && checkData.success === true) {
                                     resolve(checkData.result);
                                 } else if (checkData.status === "started" || checkData.status === "processing") {
@@ -596,29 +536,22 @@
                                 reject(err);
                             }
                         };
-                        
                         checkThread();
                     });
-                    
                 } catch (err) {
                     throw new Error('TRW bypass failed');
                 }
             }
-            
             async function originalBypass(url) {
                 const apiUrl = `https://afklol-api.vercel.app/bypass?url=${encodeURIComponent(url)}`;
                 const response = await fetch(apiUrl);
-                
                 if (!response.ok) {
                     throw new Error(`API error: ${response.status} ${response.statusText}`);
                 }
-                
                 const data = await response.text();
-                
                 if (!data || data.trim() === '') {
                     throw new Error('Empty response from API');
                 }
-                
                 try {
                     const jsonData = JSON.parse(data);
                     if (jsonData.status === "error") {
@@ -629,15 +562,12 @@
                     return data;
                 }
             }
-            
             bypassBtn.addEventListener('click', async function() {
                 const url = urlInput.value.trim();
-                
                 if (!url) {
                     showError('Please enter a URL');
                     return;
                 }
-                
                 try {
                     new URL(url);
                     if (!url.startsWith('http')) {
@@ -647,21 +577,17 @@
                     showError('Please enter a valid URL starting with http:// or https://');
                     return;
                 }
-                
                 loading.style.display = 'block';
                 error.style.display = 'none';
                 success.style.display = 'none';
                 resultContainer.style.display = 'none';
                 bypassBtn.disabled = true;
                 bypassBtn.innerHTML = '<span>Processing...</span>';
-                
                 try {
                     let result;
                     let processTime = '';
                     const startTime = Date.now();
-                    
                     loading.querySelector('p').textContent = 'ℹ️ Processing (this may take a few seconds)';
-                    
                     if (shouldUseVoltarOnly(url)) {
                         result = await voltarBypass(url);
                     } else if (shouldUseVoltarFirst(url)) {
@@ -685,32 +611,30 @@
                     } else {
                         result = await originalBypass(url);
                     }
-                    
                     const endTime = Date.now();
                     processTime = ` (${((endTime - startTime) / 1000).toFixed(2)}s)`;
-                    
                     let finalResult = result;
-                    
                     try {
-                        const jsonData = JSON.parse(result);
-                        if (jsonData.status === "error") {
+                        const jsonData = typeof result === 'string' ? JSON.parse(result) : result;
+                        if (jsonData && jsonData.status === "error") {
                             throw new Error(jsonData.message || "Unknown error occurred");
                         }
-                        if (jsonData.result) {
+                        if (jsonData && jsonData.result) {
                             finalResult = jsonData.result;
+                        }
+                        if (jsonData && jsonData.url) {
+                            finalResult = jsonData.url;
                         }
                     } catch (e) {
                     }
-                    
                     displayResult(finalResult);
                     showSuccess(`URL processed successfully!${processTime}`);
-                    
                 } catch (err) {
                     console.error('Bypass error:', err);
-                    if (err.message.includes('TRW bypass failed')) {
+                    if (err.message && err.message.includes('TRW bypass failed')) {
                         showError('Failed to bypass URL');
                     } else {
-                        showError(`Failed to bypass URL: ${err.message}`);
+                        showError(`Failed to bypass URL: ${err && err.message ? err.message : err}`);
                     }
                 } finally {
                     loading.style.display = 'none';
@@ -719,10 +643,8 @@
                     loading.querySelector('p').textContent = 'ℹ️ Processing (this may take a few seconds)';
                 }
             });
-            
             function displayResult(result) {
-                const cleanResult = result.trim();
-                
+                const cleanResult = (typeof result === 'string' ? result : JSON.stringify(result)).trim();
                 try {
                     const testUrl = new URL(cleanResult);
                     resultUrl.href = cleanResult;
@@ -736,27 +658,22 @@
                     resultText.style.display = 'block';
                     redirectBtn.style.display = 'none';
                 }
-                
                 resultContainer.style.display = 'block';
                 resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
-            
             function showError(message) {
                 error.textContent = message;
                 error.style.display = 'block';
                 success.style.display = 'none';
                 resultContainer.style.display = 'none';
             }
-            
             function showSuccess(message) {
                 success.textContent = message;
                 success.style.display = 'block';
                 error.style.display = 'none';
             }
-            
             copyBtn.addEventListener('click', function() {
                 const textToCopy = resultUrl.style.display !== 'none' ? resultUrl.href : resultText.textContent;
-                
                 navigator.clipboard.writeText(textToCopy)
                     .then(() => {
                         const originalText = copyBtn.innerHTML;
@@ -772,19 +689,16 @@
                         showError('Failed to copy to clipboard');
                     });
             });
-            
             redirectBtn.addEventListener('click', function() {
                 if (resultUrl.href) {
                     window.location.href = resultUrl.href;
                 }
             });
-            
             urlInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     bypassBtn.click();
                 }
             });
-            
             urlInput.focus();
         });
     </script>
