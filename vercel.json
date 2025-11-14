@@ -1,11 +1,39 @@
 {
   "version": 2,
-  "buildCommand": null,
-  "outputDirectory": ".",
+  "builds": [
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.js", 
+      "use": "@vercel/static"
+    }
+  ],
   "routes": [
     {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/supported",
+      "dest": "/supported.html"
+    },
+    {
+      "src": "/update",
+      "dest": "/update.html"
+    },
+    {
+      "src": "/meta.js",
+      "dest": "/meta.js"
+    },
+    {
+      "src": "/afk-bypasser.user.js",
+      "dest": "/afk-bypasser.user.js"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/$1"
+      "dest": "/index.html"
     }
   ]
 }
