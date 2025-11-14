@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFK Bypasser Helper
 // @namespace    https://afk-bypasser.vercel.app
-// @version      1.6
+// @version      1.7
 // @description  Automatically redirects supported shorteners to AFK Bypasser
 // @author       AFK Bypasser
 // @icon         https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png
@@ -61,6 +61,7 @@
 // @match        *://*ytsubme.com/*
 // @match        *://krnl.cat/*
 // @match        *://keyrblx.com/*
+// @match        *://pandadevelopment/*
 // @updateURL    https://afk-bypasser.vercel.app/meta.js
 // @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js
 // @grant        GM_xmlhttpRequest
@@ -69,8 +70,12 @@
 
 (function() {
     'use strict';
+    
+    const redirectWaitTime = 10; // Change this number to adjust countdown seconds
+    
+    
     const bypasserSite = "https://afk-bypasser.vercel.app";
-    const currentVersion = "1.6";
+    const currentVersion = "1.7";
     
     function checkForUpdate() {
         if (window.location.href.includes('afk-bypasser.vercel.app')) return;
@@ -144,7 +149,7 @@
         const countdown = document.createElement('div');
         countdown.id = 'afk-countdown';
         countdown.style.cssText = `font-size:3rem;font-weight:bold;margin:20px 0;color:#3b82f6;`;
-        countdown.textContent = '10';
+        countdown.textContent = redirectWaitTime.toString();
         const info = document.createElement('p');
         info.textContent = 'You will be automatically redirected to AFK Bypasser';
         info.style.cssText = `font-size:1rem;color:#94a3b8;margin-top:20px;`;
@@ -155,7 +160,7 @@
         overlay.appendChild(content);
         document.documentElement.appendChild(overlay);
         document.body.style.overflow = 'hidden';
-        let count = 10;
+        let count = redirectWaitTime;
         const countdownElement = document.getElementById('afk-countdown');
         const countdownInterval = setInterval(() => {
             count--;
