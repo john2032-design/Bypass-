@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFK Bypasser Helper
 // @namespace    https://afk-bypasser.vercel.app
-// @version      1.7
+// @version      1.8
 // @description  Automatically redirects supported shorteners to AFK Bypasser
 // @author       AFK Bypasser
 // @icon         https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png
@@ -71,10 +71,14 @@
 (function() {
     'use strict';
     
-    const redirectWaitTime = 10;
+    if (window.afkBypasserLoaded) {
+        return;
+    }
+    window.afkBypasserLoaded = true;
     
+    const redirectWaitTime = 10;
     const bypasserSite = "https://afk-bypasser.vercel.app";
-    const currentVersion = "1.7";
+    const currentVersion = "1.8";
     
     function checkForUpdate() {
         if (window.location.href.includes('afk-bypasser.vercel.app')) return;
@@ -134,24 +138,34 @@
     } else {
         checkForUpdate();
         
+        if (document.getElementById('afk-bypasser-overlay')) {
+            return;
+        }
+        
         const overlay = document.createElement('div');
         overlay.id = 'afk-bypasser-overlay';
         overlay.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,14,23,0.95);backdrop-filter:blur(10px);z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;font-family:'Segoe UI',sans-serif;`;
+        
         const content = document.createElement('div');
         content.style.cssText = `text-align:center;max-width:500px;padding:30px;background:rgba(255,255,255,0.08);border-radius:20px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.3);margin:20px;`;
+        
         const title = document.createElement('h2');
         title.textContent = 'AFK Bypasser';
         title.style.cssText = `font-size:2.5rem;margin-bottom:15px;background:linear-gradient(to right,#3b82f6,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;`;
+        
         const message = document.createElement('p');
         message.textContent = 'Redirecting to bypass this link...';
         message.style.cssText = `font-size:1.2rem;margin-bottom:20px;color:#cbd5e1;`;
+        
         const countdown = document.createElement('div');
         countdown.id = 'afk-countdown';
         countdown.style.cssText = `font-size:3rem;font-weight:bold;margin:20px 0;color:#3b82f6;`;
         countdown.textContent = redirectWaitTime.toString();
+        
         const info = document.createElement('p');
         info.textContent = 'You will be automatically redirected to AFK Bypasser';
         info.style.cssText = `font-size:1rem;color:#94a3b8;margin-top:20px;`;
+        
         content.appendChild(title);
         content.appendChild(message);
         content.appendChild(countdown);
@@ -159,16 +173,35 @@
         overlay.appendChild(content);
         document.documentElement.appendChild(overlay);
         document.body.style.overflow = 'hidden';
+        
         let count = redirectWaitTime;
         const countdownElement = document.getElementById('afk-countdown');
+        let redirectTriggered = false;
+        
         const countdownInterval = setInterval(() => {
+            if (redirectTriggered) {
+                clearInterval(countdownInterval);
+                return;
+            }
+            
             count--;
             countdownElement.textContent = count.toString();
+            
             if (count <= 0) {
+                redirectTriggered = true;
                 clearInterval(countdownInterval);
                 const currentUrl = encodeURIComponent(window.location.href);
                 window.location.href = `${bypasserSite}/?url=${currentUrl}`;
             }
         }, 1000);
+        
+        setTimeout(() => {
+            if (!redirectTriggered) {
+                redirectTriggered = true;
+                clearInterval(countdownInterval);
+                const currentUrl = encodeURIComponent(window.location.href);
+                window.location.href = `${bypasserSite}/?url=${currentUrl}`;
+            }
+        }, (redirectWaitTime + 5) * 1000);
     }
 })();
