@@ -76,9 +76,9 @@
     }
     window.afkBypasserLoaded = true;
     
-    const redirectWaitTime = 10;
+    const redirectWaitTime = 5;
     const bypasserSite = "https://afk-bypasser.vercel.app";
-    const currentVersion = "1.9";
+    const currentVersion = "2.0";
     
     function checkForUpdate() {
         if (window.location.href.includes('afk-bypasser.vercel.app')) return;
