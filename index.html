@@ -525,7 +525,7 @@
                                 
                                 const checkData = await checkResponse.json();
                                 
-                                if (checkData.status === "Done" && checkData.success) {
+                                if (checkData.status === "Done" && checkData.success === true) {
                                     resolve(checkData.result);
                                 } else if (checkData.status === "started" || checkData.status === "processing") {
                                     attempts++;
