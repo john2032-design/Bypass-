@@ -519,7 +519,6 @@
                     const createResponse = await fetch('http://77.110.121.76:3000/bypass/createTask', {
                         method: 'POST',
                         headers: {
-                            'x-user-id': '',
                             'x-api-key': '',
                             'Content-Type': 'application/json'
                         },
@@ -536,12 +535,8 @@
                     
                     const createData = await createResponse.json();
                     
-                    if (createData.status === "error") {
-                        throw new Error(createData.message || "Voltar API error");
-                    }
-                    
-                    if (createData.status !== "success" || !createData.taskId) {
-                        throw new Error('Invalid response from Voltar API');
+                    if (!createData.taskId) {
+                        throw new Error('No taskId received from Voltar API');
                     }
                     
                     if (createData.message) {
