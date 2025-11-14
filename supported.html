@@ -204,11 +204,10 @@
                 "getpolsec.com",
                 "goo.gl",
                 "is.gd",
-                "key.valex.io",
                 "keyguardian.net",
                 "keyguardian.org",
                 "keyrblx.com",
-                "krnl.cat",
+at                "krnl.c",
                 "ldnesfs.com",
                 "link-hub.net",
                 "link-unlock.com",
@@ -247,14 +246,13 @@
                 "trigon",
                 "v.gd",
                 "work.ink",
-                "ytsubme.com",
-                "zysume.net"
+                "ytsubme.com"
             ];
             
             supportedServices.sort().forEach(service => {
                 const serviceItem = document.createElement('div');
                 serviceItem.className = 'service-item';
-                serviceItem.textContent = service.replace('https://', '');
+                serviceItem.textContent = service;
                 serviceItem.setAttribute('aria-label', `Service: ${service}`);
                 servicesList.appendChild(serviceItem);
             });
