@@ -1,4 +1,8 @@
 {
   "name": "afk-bypasser",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "echo 'No build process' && exit 0"
+  }
 }
