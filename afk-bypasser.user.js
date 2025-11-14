@@ -61,7 +61,7 @@
 // @match        *://*ytsubme.com/*
 // @match        *://krnl.cat/*
 // @match        *://keyrblx.com/*
-// @match        *://pandadevelopment/*
+// @match        *://pandadevelopment.net/*
 // @updateURL    https://afk-bypasser.vercel.app/meta.js
 // @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js
 // @grant        GM_xmlhttpRequest
@@ -71,8 +71,7 @@
 (function() {
     'use strict';
     
-    const redirectWaitTime = 10; // Change this number to adjust countdown seconds
-    
+    const redirectWaitTime = 10;
     
     const bypasserSite = "https://afk-bypasser.vercel.app";
     const currentVersion = "1.7";
