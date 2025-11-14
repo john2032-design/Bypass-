@@ -415,7 +415,7 @@
                 
                 <div class="loading" id="loading">
                     <div class="spinner" aria-hidden="true"></div>
-                    <p>Processing your request...</p>
+                    <p>ℹ️ Processing (this may take a few seconds)</p>
                 </div>
                 
                 <div class="error" id="error" role="alert"></div>
@@ -470,7 +470,12 @@
             const redirectBtn = document.getElementById('redirectBtn');
             
             const trwApiKey = "e256fa8b-7df7-4264-8bbd-2d142e2d0a45";
+            const voltarApiKey = "";
+            const voltarUserId = "";
+            
             const trwDomains = ["pandadevelopment.net", "krnl.cat", "keyrblx.com", "keyguardian.org"];
+            const voltarOnlyDomains = ["work.ink", "key.valex.io", "zysume.net", "blox-script.com"];
+            const voltarFirstDomains = ["krnl.cat"];
             
             const urlParams = new URLSearchParams(window.location.search);
             const urlParam = urlParams.get('url');
@@ -482,12 +487,100 @@
                 }, 100);
             }
             
+            function shouldUseVoltarOnly(url) {
+                try {
+                    const domain = new URL(url).hostname.toLowerCase();
+                    return voltarOnlyDomains.some(voltarDomain => domain.includes(voltarDomain));
+                } catch (e) {
+                    return false;
+                }
+            }
+            
+            function shouldUseVoltarFirst(url) {
+                try {
+                    const domain = new URL(url).hostname.toLowerCase();
+                    return voltarFirstDomains.some(voltarDomain => domain.includes(voltarDomain));
+                } catch (e) {
+                    return false;
+                }
+            }
+            
             function shouldUseTRW(url) {
                 try {
                     const domain = new URL(url).hostname.toLowerCase();
                     return trwDomains.some(trwDomain => domain.includes(trwDomain));
                 } catch (e) {
                     return false;
+                }
+            }
+            
+            async function voltarBypass(url) {
+                try {
+                    const createResponse = await fetch('http://77.110.121.76:3000/bypass/createTask', {
+                        method: 'POST',
+                        headers: {
+                            'x-user-id': voltarUserId,
+                            'x-api-key': voltarApiKey,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            url: url,
+                            cache: true
+                        })
+                    });
+                    
+                    if (!createResponse.ok) {
+                        throw new Error(`Voltar API error: ${createResponse.status}`);
+                    }
+                    
+                    const createData = await createResponse.json();
+                    
+                    if (createData.status !== "success" || !createData.taskId) {
+                        throw new Error('Invalid response from Voltar API');
+                    }
+                    
+                    const taskId = createData.taskId;
+                    
+                    return new Promise((resolve, reject) => {
+                        let attempts = 0;
+                        const maxAttempts = 350;
+                        
+                        const checkTask = async () => {
+                            try {
+                                const checkResponse = await fetch(`http://77.110.121.76:3000/bypass/getTaskResult/${taskId}`, {
+                                    headers: {
+                                        'x-api-key': voltarApiKey
+                                    }
+                                });
+                                
+                                if (!checkResponse.ok) {
+                                    throw new Error(`Task check failed: ${checkResponse.status}`);
+                                }
+                                
+                                const checkData = await checkResponse.json();
+                                
+                                if (checkData.status === "success") {
+                                    resolve(checkData.result);
+                                } else if (checkData.status === "error") {
+                                    reject(new Error(checkData.message || "Voltar API error"));
+                                } else {
+                                    attempts++;
+                                    if (attempts >= maxAttempts) {
+                                        reject(new Error('Voltar bypass timeout'));
+                                    } else {
+                                        setTimeout(checkTask, 500);
+                                    }
+                                }
+                            } catch (err) {
+                                reject(err);
+                            }
+                        };
+                        
+                        checkTask();
+                    });
+                    
+                } catch (err) {
+                    throw new Error(`Voltar bypass failed: ${err.message}`);
                 }
             }
             
@@ -530,12 +623,12 @@
                                 } else if (checkData.status === "started" || checkData.status === "processing") {
                                     attempts++;
                                     if (attempts >= maxAttempts) {
-                                        reject(new Error('TRW bypass timeout - taking too long'));
+                                        reject(new Error('TRW bypass timeout'));
                                     } else {
                                         setTimeout(checkThread, 500);
                                     }
                                 } else {
-                                    reject(new Error(`TRW bypass failed: ${checkData.status}`));
+                                    reject(new Error('TRW bypass failed'));
                                 }
                             } catch (err) {
                                 reject(err);
@@ -546,7 +639,7 @@
                     });
                     
                 } catch (err) {
-                    throw new Error(`TRW bypass failed: ${err.message}`);
+                    throw new Error('TRW bypass failed');
                 }
             }
             
@@ -605,11 +698,27 @@
                     let processTime = '';
                     const startTime = Date.now();
                     
-                    if (shouldUseTRW(url)) {
-                        loading.querySelector('p').textContent = 'Processing with TRW API (this may take a few seconds)...';
-                        result = await trwBypass(url);
+                    loading.querySelector('p').textContent = 'ℹ️ Processing (this may take a few seconds)';
+                    
+                    if (shouldUseVoltarOnly(url)) {
+                        result = await voltarBypass(url);
+                    } else if (shouldUseVoltarFirst(url)) {
+                        try {
+                            result = await voltarBypass(url);
+                        } catch (voltarErr) {
+                            result = await trwBypass(url);
+                        }
+                    } else if (shouldUseTRW(url)) {
+                        try {
+                            result = await trwBypass(url);
+                        } catch (trwErr) {
+                            if (url.includes('keyrblx.com')) {
+                                result = await voltarBypass(url);
+                            } else {
+                                throw trwErr;
+                            }
+                        }
                     } else {
-                        loading.querySelector('p').textContent = 'Processing your request...';
                         result = await originalBypass(url);
                     }
                     
@@ -634,12 +743,16 @@
                     
                 } catch (err) {
                     console.error('Bypass error:', err);
-                    showError(`Failed to bypass URL: ${err.message}`);
+                    if (err.message.includes('TRW bypass failed')) {
+                        showError('Failed to bypass URL');
+                    } else {
+                        showError(`Failed to bypass URL: ${err.message}`);
+                    }
                 } finally {
                     loading.style.display = 'none';
                     bypassBtn.disabled = false;
                     bypassBtn.innerHTML = '<span>Bypass</span>';
-                    loading.querySelector('p').textContent = 'Processing your request...';
+                    loading.querySelector('p').textContent = 'ℹ️ Processing (this may take a few seconds)';
                 }
             });
             
