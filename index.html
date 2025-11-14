@@ -470,8 +470,6 @@
             const redirectBtn = document.getElementById('redirectBtn');
             
             const trwApiKey = "e256fa8b-7df7-4264-8bbd-2d142e2d0a45";
-            const voltarApiKey = "";
-            const voltarUserId = "";
             
             const trwDomains = ["pandadevelopment.net", "krnl.cat", "keyrblx.com", "keyguardian.org"];
             const voltarOnlyDomains = ["work.ink", "key.valex.io", "zysume.net", "blox-script.com"];
@@ -514,13 +512,15 @@
                 }
             }
             
-            async function voltarBypass(url) {
+            async function voltarBypass(url, updateLoadingMessage) {
                 try {
+                    updateLoadingMessage('Creating task...');
+                    
                     const createResponse = await fetch('http://77.110.121.76:3000/bypass/createTask', {
                         method: 'POST',
                         headers: {
-                            'x-user-id': voltarUserId,
-                            'x-api-key': voltarApiKey,
+                            'x-user-id': '',
+                            'x-api-key': '',
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
@@ -530,14 +530,26 @@
                     });
                     
                     if (!createResponse.ok) {
-                        throw new Error(`Voltar API error: ${createResponse.status}`);
+                        const errorText = await createResponse.text();
+                        throw new Error(`Voltar API error: ${createResponse.status} - ${errorText}`);
                     }
                     
                     const createData = await createResponse.json();
                     
+                    if (createData.status === "error") {
+                        throw new Error(createData.message || "Voltar API error");
+                    }
+                    
                     if (createData.status !== "success" || !createData.taskId) {
                         throw new Error('Invalid response from Voltar API');
                     }
+                    
+                    if (createData.message) {
+                        updateLoadingMessage(createData.message);
+                        await new Promise(resolve => setTimeout(resolve, 1500));
+                    }
+                    
+                    updateLoadingMessage('ℹ️ Processing (this may take a few seconds)');
                     
                     const taskId = createData.taskId;
                     
@@ -549,12 +561,13 @@
                             try {
                                 const checkResponse = await fetch(`http://77.110.121.76:3000/bypass/getTaskResult/${taskId}`, {
                                     headers: {
-                                        'x-api-key': voltarApiKey
+                                        'x-api-key': ''
                                     }
                                 });
                                 
                                 if (!checkResponse.ok) {
-                                    throw new Error(`Task check failed: ${checkResponse.status}`);
+                                    const errorText = await checkResponse.text();
+                                    throw new Error(`Task check failed: ${checkResponse.status} - ${errorText}`);
                                 }
                                 
                                 const checkData = await checkResponse.json();
@@ -566,7 +579,7 @@
                                 } else {
                                     attempts++;
                                     if (attempts >= maxAttempts) {
-                                        reject(new Error('Voltar bypass timeout'));
+                                        reject(new Error('Voltar bypass timeout - task taking too long'));
                                     } else {
                                         setTimeout(checkTask, 500);
                                     }
@@ -698,14 +711,19 @@
                     let processTime = '';
                     const startTime = Date.now();
                     
-                    loading.querySelector('p').textContent = 'ℹ️ Processing (this may take a few seconds)';
+                    const updateLoadingMessage = (message) => {
+                        loading.querySelector('p').textContent = message;
+                    };
+                    
+                    updateLoadingMessage('ℹ️ Processing (this may take a few seconds)');
                     
                     if (shouldUseVoltarOnly(url)) {
-                        result = await voltarBypass(url);
+                        result = await voltarBypass(url, updateLoadingMessage);
                     } else if (shouldUseVoltarFirst(url)) {
                         try {
-                            result = await voltarBypass(url);
+                            result = await voltarBypass(url, updateLoadingMessage);
                         } catch (voltarErr) {
+                            console.log('Voltar failed, trying TRW:', voltarErr.message);
                             result = await trwBypass(url);
                         }
                     } else if (shouldUseTRW(url)) {
@@ -713,7 +731,8 @@
                             result = await trwBypass(url);
                         } catch (trwErr) {
                             if (url.includes('keyrblx.com')) {
-                                result = await voltarBypass(url);
+                                console.log('TRW failed, trying Voltar:', trwErr.message);
+                                result = await voltarBypass(url, updateLoadingMessage);
                             } else {
                                 throw trwErr;
                             }
