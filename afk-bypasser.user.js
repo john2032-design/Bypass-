@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFK Bypasser Helper
 // @namespace    https://afk-bypasser.vercel.app
-// @version      1.8
+// @version      1.9
 // @description  Automatically redirects supported shorteners to AFK Bypasser
 // @author       AFK Bypasser
 // @icon         https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png
@@ -62,6 +62,8 @@
 // @match        *://krnl.cat/*
 // @match        *://keyrblx.com/*
 // @match        *://pandadevelopment.net/*
+// @match        *://key.valex.io/*
+// @match        *://zysume.net/*
 // @updateURL    https://afk-bypasser.vercel.app/meta.js
 // @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js
 // @grant        GM_xmlhttpRequest
@@ -78,7 +80,7 @@
     
     const redirectWaitTime = 10;
     const bypasserSite = "https://afk-bypasser.vercel.app";
-    const currentVersion = "1.8";
+    const currentVersion = "1.9";
     
     function checkForUpdate() {
         if (window.location.href.includes('afk-bypasser.vercel.app')) return;
