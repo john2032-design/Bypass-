@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFK Bypasser Helper
 // @namespace    https://afk-bypasser.vercel.app
-// @version      2.0
+// @version      2.1
 // @description  Automatically redirects supported shorteners to AFK Bypasser
 // @author       AFK Bypasser
 // @icon         https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png
@@ -9,6 +9,9 @@
 // @match        *://*trigon/*
 // @match        *://*rekonise.com/*
 // @match        *://*linkvertise.com/*
+// @match        *://*link-target.net/*
+// @match        *://*link-center.net/*
+// @match        *://*link-to.net/*
 // @match        *://*paster.so/*
 // @match        *://*cuttlinks.com/*
 // @match        *://*boost.ink/*
@@ -42,6 +45,7 @@
 // @match        *://*pastes.io/*
 // @match        *://*quartyz.com/*
 // @match        *://rebrand.ly/*
+// @match        *://*rentry.org/*
 // @match        *://*rinku.pro/*
 // @match        *://*rkns.link/*
 // @match        *://*shorteners-and-direct.com/*
@@ -62,7 +66,17 @@
 // @match        *://krnl.cat/*
 // @match        *://keyrblx.com/*
 // @match        *://pandadevelopment.net/*
+// @match        *://loot-link.com/*
+// @match        *://loot-links.com/*
+// @match        *://lootlink.org/*
+// @match        *://lootlinks.co/*
+// @match        *://lootdest.info/*
+// @match        *://lootdest.org/*
+// @match        *://lootdest.com/*
+// @match        *://links-loot.com/*
+// @match        *://linksloot.net/*
 // @updateURL    https://afk-bypasser.vercel.app/meta.js
 // @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js
-// @grant        none
+// @grant        GM_xmlhttpRequest
+// @run-at       document-start
 // ==/UserScript==
