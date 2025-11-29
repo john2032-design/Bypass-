@@ -22,6 +22,7 @@
             --text-muted: #888899;
             --border: rgba(255, 255, 255, 0.08);
             --radius: 24px;
+            --glass: rgba(20, 20, 25, 0.7);
         }
 
         * { margin:0; padding:0; box-sizing:border-box; outline:none; }
@@ -38,95 +39,181 @@
             padding: 20px;
         }
 
-        .container { max-width: 1000px; width: 100%; margin: 0 auto; padding: 20px; }
+        body::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+        }
 
-        header { text-align: center; margin-bottom: 50px; animation: fadeIn 0.8s ease; }
+        .container { 
+            max-width: 1000px; 
+            width: 100%; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+
+        header { 
+            text-align: center; 
+            margin-bottom: 50px; 
+            animation: fadeIn 0.8s ease; 
+        }
 
         h1 {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #fff, #999);
+            background: linear-gradient(135deg, #fff 30%, #888 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
 
-        .subtitle { color: var(--text-muted); font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; }
+        .subtitle { 
+            color: var(--text-muted); 
+            font-size: 1.1rem; 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+        }
 
-        /* Card Styles */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 40px;
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px -20px rgba(0,0,0,0.7);
             margin-bottom: 30px;
-            animation: slideUp 0.6s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin-bottom: 20px; color: white; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.5;
+        }
 
-        .info-text { color: var(--text-muted); margin-bottom: 25px; line-height: 1.6; }
+        h2 { 
+            font-family: 'Space Grotesk', sans-serif; 
+            font-size: 1.7rem; 
+            margin-bottom: 24px; 
+            color: white; 
+        }
 
-        /* Special Subsections */
+        .info-text { 
+            color: var(--text-muted); 
+            margin-bottom: 25px; 
+            line-height: 1.7; 
+        }
+
         .subsection {
-            margin: 15px 0 25px;
+            margin: 20px 0;
             padding: 20px;
             border-radius: 16px;
             background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
-            border-left: 3px solid var(--primary);
+            border-left: 4px solid var(--primary);
             color: var(--text-muted);
         }
-        .subsection strong { color: var(--primary); display: block; margin-bottom: 5px; font-family: 'Space Grotesk', sans-serif; }
+        .subsection strong { 
+            color: var(--primary); 
+            display: block; 
+            margin-bottom: 8px; 
+            font-family: 'Space Grotesk', sans-serif; 
+            font-size: 1.1rem;
+        }
 
-        /* The Grid */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 12px;
+        /* Scrollable Services List */
+        .services-container {
             margin-top: 30px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            max-height: 500px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.2);
+            box-shadow: inset 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .services-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) transparent;
+        }
+
+        .services-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        .services-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .services-list::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        .services-list::-webkit-scrollbar-thumb:hover {
+            background: #1e53d4;
         }
 
         .service-item {
-            background: rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.03);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 12px 16px;
+            padding: 14px 18px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #d0d0d0;
-            transition: all 0.2s ease;
-            cursor: default;
-            user-select: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 50px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            word-break: break-word;
         }
 
         .service-item:hover {
             background: var(--primary-dim);
             border-color: var(--primary);
             color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(45, 110, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(45, 110, 255, 0.25);
         }
 
-        /* Navigation Buttons */
+        .total-count {
+            text-align: center;
+            margin-top: 16px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
         .nav {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 16px;
             margin-top: 40px;
             flex-wrap: wrap;
         }
 
         .nav a {
-            padding: 14px 28px;
+            padding: 16px 32px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
+            min-width: 200px;
+            text-align: center;
         }
 
         .btn-back {
@@ -141,16 +228,33 @@
             color: white;
             box-shadow: 0 4px 20px rgba(45, 110, 255, 0.4);
         }
-        .btn-script:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(45, 110, 255, 0.6); }
+        .btn-script:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 30px rgba(45, 110, 255, 0.6); 
+        }
 
-        footer { text-align: center; margin-top: 50px; color: rgba(255,255,255,0.2); font-size: 0.85rem; }
+        footer { 
+            text-align: center; 
+            margin-top: 60px; 
+            color: rgba(255,255,255,0.2); 
+            font-size: 0.85rem; 
+        }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        @media (max-width: 600px) {
-            .services-grid { grid-template-columns: repeat(2, 1fr); }
-            h1 { font-size: 2rem; }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .services-list { 
+                grid-template-columns: 1fr 1fr; 
+                gap: 10px;
+                padding: 16px;
+            }
+            .service-item { padding: 12px; font-size: 0.9rem; }
+            .nav a { min-width: auto; width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+            .services-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -163,36 +267,46 @@
 
         <main>
             <div class="card">
-                <h2>Service Status</h2>
-                <p class="info-text">Our system automatically detects and bypasses the following domains. The userscript injects optimized logic for these specific hosts.</p>
+                <h2>Supported Services</h2>
+                <p class="info-text">
+                    Our userscript automatically detects and bypasses over <strong>60+</strong> URL shorteners and ad-link services. 
+                    New domains are added weekly.
+                </p>
 
                 <div class="subsection">
-                    <strong>⚡ EAS-only Mode</strong>
-                    rentry.org, paster.so, loot-link.com, loot-links.com, lootlink.org, lootlinks.co, lootdest.info, lootdest.org, lootdest.com, links-loot.com, linksloot.net
+                    <strong>EAS-only Mode (Instant Bypass)</strong>
+                    rentry.org • paster.so • loot-link.com • loot-links.com • lootlink.org • lootlinks.co • lootdest.info • lootdest.org • lootdest.com • links-loot.com • linksloot.net
                 </div>
 
                 <div class="subsection">
-                    <strong>🛡️ Hybrid Mode (EAS + ACE)</strong>
-                    linkvertise.com, link-target.net, link-center.net, link-to.net
+                    <strong>Hybrid Mode (EAS + ACE)</strong>
+                    linkvertise.com • link-target.net • link-center.net • link-to.net
                 </div>
 
-                <div class="services-grid" id="servicesList"></div>
+                <div class="services-container">
+                    <div class="services-list" id="servicesList"></div>
+                </div>
+
+                <p class="total-count" id="totalCount">Loading services...</p>
             </div>
 
             <div class="nav">
-                <a href="/" class="btn-back">← Back to Tool</a>
-                <a href="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js" target="_blank" class="btn-script" id="getUserscriptBtn">Get Userscript v2.1</a>
+                <a href="/" class="btn-back">Back to Tool</a>
+                <a href="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js" target="_blank" class="btn-script">
+                    Get Userscript v2.1
+                </a>
             </div>
         </main>
 
-        <footer class="footer">
-            <p>AFK Bypasser &copy; 2025</p>
+        <footer>
+            <p>AFK Bypasser © 2025 – Constantly Expanding</p>
         </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const servicesList = document.getElementById('servicesList');
+            const totalCount = document.getElementById('totalCount');
 
             const supportedServices = [
                 "bit.do", "bit.ly", "blox-script.com", "boost.ink", "bst.gg", "bstshrt.com",
@@ -209,16 +323,24 @@
                 "subfinal.com", "t.co", "t.ly", "tiny.cc", "tinylink.onl", "tinyurl.com"
             ];
 
-            // Add staggered animation to grid items
+            supportedServices.sort();
+
             supportedServices.forEach((service, index) => {
                 const div = document.createElement('div');
                 div.className = 'service-item';
                 div.textContent = service;
-                // Add a tiny delay for a cool "loading" effect
-                div.style.animation = `fadeIn 0.5s ease forwards ${index * 0.01}s`;
-                div.style.opacity = '0'; // Start hidden
+                div.style.opacity = '0';
+                div.style.transform = 'translateY(20px)';
+                div.style.transition = 'all 0.4s ease';
                 servicesList.appendChild(div);
+
+                setTimeout(() => {
+                    div.style.opacity = '1';
+                    div.style.transform = 'translateY(0)';
+                }, index * 15);
             });
+
+            totalCount.textContent = `${supportedServices.length} Services Supported & Growing`;
         });
     </script>
 </body>
