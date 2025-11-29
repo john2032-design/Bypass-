@@ -3,424 +3,412 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AFK Bypasser - Skip Wait Times</title>
+    <title>AFK Bypasser - Cyberpunk Edition</title>
     <meta name="description" content="Bypass URL shorteners and skip wait times with AFK Bypasser">
     <link rel="icon" href="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png" type="image/png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            /* Cyberpunk / Modern Palette */
+            --bg-dark: #050505;
+            --bg-card: #0e0e11;
+            --primary: #2d6eff;     /* Electric Blue */
+            --primary-glow: #2d6eff80;
+            --accent: #bf00ff;      /* Neon Purple */
+            --text-main: #ffffff;
+            --text-muted: #888899;
+            --border: rgba(255, 255, 255, 0.08);
+            --radius: 24px;         /* Heavy Bento rounding */
+            --glass: rgba(20, 20, 25, 0.7);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
-
-        :root {
-            --primary: #0a0e17;
-            --secondary: #0f172a;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --text: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --glass: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --error: #ef4444;
-            --success: #10b981;
+            outline: none;
         }
 
         body {
-            background: linear-gradient(135deg, #0a0e17 0%, #0f172a 100%);
-            color: #f8fafc;
+            background-color: var(--bg-dark);
+            /* Subtle grid background */
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Decorative top glow */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
-            margin: 0 auto;
-            padding: 20px;
+            padding: 40px 20px;
+            animation: fadeIn 0.8s ease-out;
         }
 
+        /* --- Navbar --- */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            flex-wrap: wrap;
-            gap: 10px;
+            padding: 16px 24px;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 100px; /* Pill shape */
+            margin-bottom: 60px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
         }
 
-        .nav-left {
+        .nav-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
-        .nav-right {
+        .nav-links {
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .nav-btn {
             padding: 10px 20px;
-            border-radius: 10px;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: 600;
             font-size: 0.9rem;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .nav-primary {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .nav-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: #f8fafc;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            color: var(--text-muted);
         }
 
         .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            color: var(--text-main);
+            background: rgba(255,255,255,0.05);
         }
 
-        .nav-primary:hover {
-            background: #2563eb;
+        .nav-btn.active {
+            background: var(--text-main);
+            color: black;
+            font-weight: 600;
         }
 
-        .nav-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
+        /* --- Header --- */
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
         }
 
         .logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            border: 3px solid rgba(59, 130, 246, 0.3);
-            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            box-shadow: 0 0 30px var(--primary-glow);
+            transition: transform 0.5s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05) rotate(3deg);
         }
 
         h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            margin-bottom: 10px;
-            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 30%, #888 100%);
             -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
 
         .subtitle {
-            color: #cbd5e1;
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto;
         }
 
+        /* --- Main Card (Bento Style) --- */
         .card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: clamp(20px, 4vw, 30px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: 0 20px 50px -20px rgba(0,0,0,0.7);
             margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top gradient line on card */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.5;
         }
 
         .input-group {
             display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 16px;
+            position: relative;
+            margin-bottom: 24px;
         }
 
         input[type="url"] {
             flex: 1;
-            padding: 16px 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.2);
-            color: #f8fafc;
-            font-size: 1rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 18px 24px;
+            border-radius: 16px;
+            font-size: 1.05rem;
             transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
         }
 
         input[type="url"]:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-        }
-
-        input[type="url"]::placeholder {
-            color: #cbd5e1;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(45, 110, 255, 0.15), inset 0 2px 4px rgba(0,0,0,0.2);
         }
 
         button {
-            background: #3b82f6;
+            background: var(--primary);
             color: white;
             border: none;
-            border-radius: 12px;
-            padding: 16px 24px;
-            font-size: 1rem;
+            padding: 0 32px;
+            border-radius: 16px;
             font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            white-space: nowrap;
+            box-shadow: 0 4px 20px var(--primary-glow);
+            position: relative;
+            overflow: hidden;
         }
 
         button:hover {
-            background: #2563eb;
             transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--primary-glow);
         }
-
-        button:active {
-            transform: translateY(0);
-        }
+        
+        button:active { transform: translateY(0); }
 
         button:disabled {
-            background: #64748b;
+            background: #333;
+            color: #666;
+            box-shadow: none;
             cursor: not-allowed;
             transform: none;
         }
 
-        .result-container {
-            margin-top: 20px;
-            display: none;
-        }
-
-        .result-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            word-break: break-all;
-            min-height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .result-url {
-            color: #3b82f6;
-            text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
-        .result-url:hover {
-            text-decoration: underline;
-        }
-
-        .result-text {
-            color: #f8fafc;
-            font-size: 1rem;
-            line-height: 1.5;
-            text-align: center;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .secondary-btn {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .secondary-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
+        /* Loading Spinner */
         .loading {
             display: none;
             text-align: center;
-            margin: 20px 0;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
         }
 
         .spinner {
             width: 40px;
             height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-left: 4px solid #3b82f6;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--primary);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
             margin: 0 auto 15px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Results Area */
+        .result-container {
+            display: none;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            animation: slideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
+        .result-box {
+            background: rgba(45, 110, 255, 0.05); /* Very subtle blue tint */
+            border: 1px dashed var(--primary);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+
+        .result-url {
+            color: var(--primary);
+            font-size: 1.1rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .result-url:hover { text-decoration: underline; }
+        .result-text { color: var(--text-main); }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .secondary-btn {
+            background: rgba(255,255,255,0.05);
+            box-shadow: none;
+            color: var(--text-main);
+        }
+        
+        .secondary-btn:hover {
+            background: rgba(255,255,255,0.1);
+            box-shadow: none;
+        }
+
+        /* Notifications */
+        .status-msg {
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+            font-size: 0.9rem;
+            animation: fadeIn 0.3s ease;
+        }
+        .error { background: rgba(255, 50, 50, 0.1); color: #ff5555; border: 1px solid rgba(255, 50, 50, 0.2); }
+        .success { background: rgba(0, 255, 150, 0.1); color: #00ff96; border: 1px solid rgba(0, 255, 150, 0.2); }
+
+        /* How it works section */
         .how-it-works {
-            margin-top: 40px;
+            background: transparent;
+            border: 1px solid var(--border);
         }
 
         .how-it-works h2 {
-            font-size: clamp(1.5rem, 3vw, 1.8rem);
-            margin-bottom: 20px;
-            color: #f8fafc;
-            text-align: center;
-        }
-
-        .how-it-works p {
+            font-family: 'Space Grotesk', sans-serif;
             margin-bottom: 15px;
+        }
+
+        .how-it-works p, .how-it-works li {
+            color: var(--text-muted);
             line-height: 1.6;
-            color: #cbd5e1;
+        }
+        
+        .steps { margin: 20px 0 20px 20px; }
+        .steps li { margin-bottom: 8px; }
+
+        footer {
+            margin-top: auto;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.85rem;
+            padding-bottom: 20px;
         }
 
-        .steps {
-            margin-left: 20px;
-            margin-bottom: 20px;
+        /* Animations */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
         }
 
-        .steps li {
-            margin-bottom: 10px;
-            line-height: 1.6;
-            color: #cbd5e1;
-        }
-
-        .error {
-            color: #ef4444;
-            text-align: center;
-            margin-top: 10px;
-            display: none;
-            padding: 12px;
-            background: rgba(239, 68, 68, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-
-        .success {
-            color: #10b981;
-            text-align: center;
-            margin-top: 10px;
-            display: none;
-            padding: 12px;
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #cbd5e1;
-            font-size: 0.9rem;
-        }
-
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .input-group {
-                flex-direction: column;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            button {
-                width: 100%;
-            }
-
-            .navbar {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-
-            .nav-left, .nav-right {
-                justify-content: center;
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                padding: 10px;
-            }
-
-            .nav-btn {
-                padding: 8px 16px;
-                font-size: 0.85rem;
-            }
+            h1 { font-size: 2.5rem; }
+            .input-group { flex-direction: column; }
+            .navbar { flex-direction: column; gap: 15px; padding: 20px; border-radius: 24px; }
+            button { width: 100%; padding: 16px; }
+            .action-buttons { flex-direction: column; }
         }
     </style>
 </head>
 <body>
+
     <div class="container">
         <nav class="navbar">
-            <div class="nav-left">
-                <a href="/" class="nav-btn nav-primary">Bypass</a>
-            </div>
-            <div class="nav-right">
-                <a href="/supported" class="nav-btn nav-secondary">Supported Services</a>
-                <a href="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js" target="_blank" class="nav-btn nav-secondary">Get Userscript</a>
+            <a href="/" class="nav-brand">
+                <img src="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png" width="30" height="30" style="border-radius: 6px;" alt="logo">
+                AFK Bypasser
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-btn active">Bypass</a>
+                <a href="/supported" class="nav-btn">Supported</a>
+                <a href="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js" target="_blank" class="nav-btn">Userscript</a>
             </div>
         </nav>
-        
+
         <header>
-            <img src="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png" alt="AFK Bypasser Logo" class="logo">
+            <div class="logo-container">
+                <img src="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png" alt="AFK Bypasser Logo" class="logo">
+            </div>
             <h1>AFK Bypasser</h1>
-            <p class="subtitle">Skip the wait times and get direct access to your content instantly</p>
+            <p class="subtitle">Bypass URL shorteners instantly. No wait times. No ads.</p>
         </header>
         
         <main>
             <div class="card">
                 <div class="input-group">
-                    <input type="url" id="urlInput" placeholder="Paste your URL here..." autocomplete="off" aria-label="URL to bypass">
+                    <input type="url" id="urlInput" placeholder="Paste your URL here (e.g., linkvertise...)" autocomplete="off" aria-label="URL to bypass">
                     <button id="bypassBtn">
-                        <span>Bypass</span>
+                        <span>Bypass Link</span>
                     </button>
                 </div>
-                
+              
                 <div class="loading" id="loading">
                     <div class="spinner" aria-hidden="true"></div>
-                    <p>ℹ️ Processing (this may take a few seconds)</p>
+                    <p style="color: var(--text-muted)">Processing request via API...</p>
                 </div>
-                
-                <div class="error" id="error" role="alert"></div>
-                <div class="success" id="success" role="status"></div>
-                
+              
+                <div class="status-msg error" id="error" role="alert"></div>
+                <div class="status-msg success" id="success" role="status"></div>
+              
                 <div class="result-container" id="resultContainer">
                     <div class="result-box">
                         <a href="#" id="resultUrl" class="result-url" target="_blank" rel="noopener"></a>
@@ -431,7 +419,7 @@
                             <span>Copy Result</span>
                         </button>
                         <button id="redirectBtn">
-                            <span>Redirect</span>
+                            <span>Go to Link</span>
                         </button>
                     </div>
                 </div>
@@ -439,20 +427,18 @@
             
             <div class="card how-it-works">
                 <h2>How It Works</h2>
-                <p>AFK Bypasser uses advanced APIs to help you skip unnecessary wait times and access content directly from supported URL shorteners.</p>
-                
+                <p>AFK Bypasser utilizes advanced API endpoints to resolve destination links behind ad-walls.</p>
                 <ol class="steps">
-                    <li>Paste a URL from any of our supported services in the input field above</li>
-                    <li>Click the "Bypass" button to process the URL through our system</li>
-                    <li>Get direct access to your content or copy the bypassed result</li>
+                    <li>Paste a URL from any supported service above.</li>
+                    <li>Click <strong>Bypass Link</strong> to initiate the handshake.</li>
+                    <li>Instantly receive the direct destination link.</li>
                 </ol>
-                
-                <p>Our service automatically processes your request and returns the direct content without additional steps or waiting periods.</p>
+                <p>Our system supports dynamic key generation for services like Linkvertise and Delta.</p>
             </div>
         </main>
 
-        <footer class="footer">
-            <p>AFK Bypasser &copy; 2024 - Modern URL bypass solution</p>
+        <footer>
+            <p>AFK Bypasser &copy; 2025 - Designed for Speed</p>
         </footer>
     </div>
 
@@ -470,7 +456,6 @@
             const redirectBtn = document.getElementById('redirectBtn');
             
             const trwApiKey = "e256fa8b-7df7-4264-8bbd-2d142e2d0a45";
-            
             const trwDomains = ["pandadevelopment.net", "krnl.cat", "keyrblx.com", "keyguardian.org"];
             
             const urlParams = new URLSearchParams(window.location.search);
@@ -643,7 +628,7 @@
                 } finally {
                     loading.style.display = 'none';
                     bypassBtn.disabled = false;
-                    bypassBtn.innerHTML = '<span>Bypass</span>';
+                    bypassBtn.innerHTML = '<span>Bypass Link</span>';
                     loading.querySelector('p').textContent = 'ℹ️ Processing (this may take a few seconds)';
                 }
             });
