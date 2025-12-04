@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AFK Bypasser - Designed For Speed</title>
-    <meta name="description" content="Bypass URL shorteners and skip wait times with AFK Bypasser">
-    <link rel="icon" href="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png" type="image/png">
+    <title>Vortix Bypass - Designed For Speed</title>
+    <meta name="description" content="Bypass URL shorteners and skip wait times with Vortix Bypass">
+    <link rel="icon" href="https://i.ibb.co/FqLb0CxF/F8-F01-A21-CD9-C-4573-9-CB9-8-B2917-ED039-F.png" type="image/png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -163,8 +163,8 @@
     <div class="container">
         <nav class="navbar">
             <a href="/" class="nav-brand">
-                <img src="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png" width="30" height="30" style="border-radius: 6px;" alt="logo">
-                AFK Bypasser
+                <img src="https://i.ibb.co/FqLb0CxF/F8-F01-A21-CD9-C-4573-9-CB9-8-B2917-ED039-F.png" width="30" height="30" style="border-radius: 6px;" alt="logo">
+                Vortix Bypass
             </a>
             <div class="nav-links">
                 <a href="/" class="nav-btn active">Bypass</a>
@@ -175,9 +175,9 @@
 
         <header>
             <div class="logo-container">
-                <img src="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png" alt="AFK Bypasser Logo" class="logo">
+                <img src="https://i.ibb.co/FqLb0CxF/F8-F01-A21-CD9-C-4573-9-CB9-8-B2917-ED039-F.png" alt="Vortix Bypass Logo" class="logo">
             </div>
-            <h1>AFK Bypasser</h1>
+            <h1>Vortix Bypass</h1>
             <p class="subtitle">Bypass URL shorteners instantly. No wait times. No ads.</p>
         </header>
         
@@ -219,7 +219,7 @@
             
             <div class="card how-it-works">
                 <h2>How It Works</h2>
-                <p>AFK Bypasser utilizes advanced API endpoints to resolve destination links behind ad-walls.</p>
+                <p>Vortix Bypass utilizes advanced API endpoints to resolve destination links behind ad-walls.</p>
                 <ol class="steps">
                     <li>Paste a URL from any supported service above.</li>
                     <li>Click <strong>Bypass Link</strong> to initiate the handshake.</li>
@@ -230,7 +230,7 @@
         </main>
 
         <footer>
-            <p>AFK Bypasser © 2025 - Designed for Speed</p>
+            <p>Vortix Bypass © 2025 - Designed for Speed</p>
         </footer>
     </div>
 
@@ -248,8 +248,16 @@
             const copyBtn = document.getElementById('copyBtn');
             const redirectBtn = document.getElementById('redirectBtn');
             
-            const trwApiKey = "e256fa8b-7df7-4264-8bbd-2d142e2d0a45";
-            const trwDomains = ["pandadevelopment.net", "krnl.cat", "keyrblx.com", "keyguardian.org"];
+            // Load smart detect state from localStorage
+            const savedSmartDetect = localStorage.getItem('vortixSmartDetect');
+            if (savedSmartDetect !== null) {
+                smartDetectToggle.checked = savedSmartDetect === 'true';
+            }
+
+            // Save smart detect state when changed
+            smartDetectToggle.addEventListener('change', function() {
+                localStorage.setItem('vortixSmartDetect', this.checked);
+            });
 
             // Smart Detect supported domains
             const SMART_DETECT_DOMAINS = [
@@ -258,7 +266,8 @@
                 "lootdest.info","lootdest.org","lootdest.com","links-loot.com","linksloot.net",
                 "rentry.org","paster.so","rekonise.com","sub2unlock","bit.ly","tinyurl.com",
                 "boost.ink","bst.gg","krnl.cat","pandadevelopment.net","keyrblx.com",
-                "keyguardian.org","getkey.xyz","quartyz.com","rinku.pro","rkns.link"
+                "keyguardian.org","getkey.xyz","quartyz.com","rinku.pro","rkns.link",
+                "auth.platoboost"
             ];
 
             let smartDetectTriggered = false;
@@ -270,37 +279,7 @@
                 setTimeout(() => bypassBtn.click(), 100);
             }
             
-            function shouldUseTRW(url) {
-                try {
-                    const domain = new URL(url).hostname.toLowerCase();
-                    return trwDomains.some(d => domain.includes(d));
-                } catch { return false; }
-            }
-            
-            async function trwBypass(url) {
-                const res = await fetch(`https://trw.lat/api/v2/bypass?url=${encodeURIComponent(url)}`, {
-                    headers: { 'x-api-key': trwApiKey }
-                });
-                if (!res.ok) throw new Error("TRW API error");
-                const data = await res.json();
-                if (data.status !== "started" || !data.ThreadID) throw new Error("Invalid TRW response");
-
-                return new Promise((resolve, reject) => {
-                    let attempts = 0;
-                    const check = async () => {
-                        try {
-                            const checkRes = await fetch(`https://trw.lat/api/v2/threadcheck?id=${data.ThreadID}`);
-                            const checkData = await checkRes.json();
-                            if (checkData.status === "Done" && checkData.success) resolve(checkData.result);
-                            else if (["started","processing"].includes(checkData.status) && attempts++ < 120) setTimeout(check, 500);
-                            else reject(new Error("TRW timeout"));
-                        } catch { reject(new Error("TRW failed")); }
-                    };
-                    check();
-                });
-            }
-            
-            async function originalBypass(url) {
+            async function bypassUrl(url) {
                 const res = await fetch(`https://afklol-api.vercel.app/bypass?url=${encodeURIComponent(url)}`);
                 if (!res.ok) throw new Error(`API error: ${res.status}`);
                 return await res.text();
@@ -341,7 +320,7 @@
                     const start = Date.now();
                     loading.querySelector('p').textContent = 'Processing (this may take a few seconds)';
 
-                    const rawResult = shouldUseTRW(url) ? await trwBypass(url) : await originalBypass(url);
+                    const rawResult = await bypassUrl(url);
                     const time = ` (${((Date.now() - start)/1000).toFixed(2)}s)`;
 
                     let result = rawResult;
