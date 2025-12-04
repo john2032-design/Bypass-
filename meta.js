@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name         AFK Bypasser Helper
-// @namespace    https://afk-bypasser.vercel.app
-// @version      2.2
-// @description  Automatically redirects supported shorteners to AFK Bypasser
-// @author       AFK Bypasser
-// @icon         https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/B57FBD3E-489E-4F0D-A5C0-08017DA44C4E.png
+// @name         Vortix Bypass Helper
+// @namespace    https://vortix-bypass.vercel.app
+// @version      2.3
+// @description  Automatically redirects supported shorteners to Vortix Bypass
+// @author       Vortix Bypass
+// @icon         https://i.ibb.co/FqLb0CxF/F8-F01-A21-CD9-C-4573-9-CB9-8-B2917-ED039-F.png
 // @match        *://mobile.codex.lol/*
 // @match        *://*trigon/*
 // @match        *://*rekonise.com/*
@@ -75,8 +75,9 @@
 // @match        *://lootdest.com/*
 // @match        *://links-loot.com/*
 // @match        *://linksloot.net/*
-// @updateURL    https://afk-bypasser.vercel.app/meta.js
-// @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/afk-bypasser.user.js
+// @match        *://auth.platoboost/*
+// @updateURL    https://vortix-bypass.vercel.app/meta.js
+// @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/vortix-bypass.user.js
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
 // ==/UserScript==
