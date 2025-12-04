@@ -76,7 +76,7 @@
 // @match        *://lootdest.com/*
 // @match        *://links-loot.com/*
 // @match        *://linksloot.net/*
-// @match        *://auth.platoboost/*
+// @match        *://auth.platoboost.app/*
 // @updateURL    https://vortix-bypass.vercel.app/meta.js
 // @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/vortix-bypass.user.js
 // @grant        GM_xmlhttpRequest
