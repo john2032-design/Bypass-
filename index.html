@@ -13,7 +13,6 @@
 
     <style>
         :root {
-            /* Cyberpunk / Modern Palette */
             --bg-dark: #050505;
             --bg-card: #0e0e11;
             --primary: #2d6eff;
@@ -60,7 +59,6 @@
 
         .container { max-width: 900px; width: 100%; padding: 40px 20px; animation: fadeIn 0.8s ease-out; }
 
-        /* Navbar */
         .navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 16px 24px; background: var(--glass); backdrop-filter: blur(12px);
@@ -74,7 +72,6 @@
         .nav-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
         .nav-btn.active { background: var(--text-main); color: black; font-weight: 600; }
 
-        /* Header */
         header { text-align: center; margin-bottom: 50px; }
         .logo-container { position: relative; width: 100px; height: 100px; margin: 0 auto 20px; }
         .logo { width: 100%; height: 100%; border-radius: 24px; box-shadow: 0 0 30px var(--primary-glow); transition: transform 0.5s ease; }
@@ -82,7 +79,6 @@
         h1 { font-family: 'Space Grotesk', sans-serif; font-size: 3.5rem; line-height: 1.1; margin-bottom: 12px; background: linear-gradient(135deg, #fff 30%, #888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
         .subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto; }
 
-        /* Card */
         .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; box-shadow: 0 20px 50px -20px rgba(0,0,0,0.7); margin-bottom: 30px; position: relative; overflow: hidden; }
         .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--primary), transparent); opacity: 0.5; }
 
@@ -97,12 +93,10 @@
         }
         input[type="url"]:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(45, 110, 255, 0.15), inset 0 2px 4px rgba(0,0,0,0.2); }
 
-        /* Smart Detect Toggle */
         .toggle-wrapper {
             display: flex; align-items: center; gap: 12px; white-space: nowrap; color: var(--text-muted); font-size: 0.9rem;
         }
 
-        /* Pill Toggle Switch */
         .switch { position: relative; display: inline-block; width: 56px; height: 30px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
@@ -119,7 +113,6 @@
         button:active { transform: translateY(0); }
         button:disabled { background: #333; color: #666; box-shadow: none; cursor: not-allowed; transform: none; }
 
-        /* Loading & Results */
         .loading { display: none; text-align: center; padding: 20px; animation: fadeIn 0.3s ease; }
         .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 15px; }
 
@@ -248,18 +241,15 @@
             const copyBtn = document.getElementById('copyBtn');
             const redirectBtn = document.getElementById('redirectBtn');
             
-            // Load smart detect state from localStorage
             const savedSmartDetect = localStorage.getItem('vortixSmartDetect');
             if (savedSmartDetect !== null) {
                 smartDetectToggle.checked = savedSmartDetect === 'true';
             }
 
-            // Save smart detect state when changed
             smartDetectToggle.addEventListener('change', function() {
                 localStorage.setItem('vortixSmartDetect', this.checked);
             });
 
-            // Smart Detect supported domains
             const SMART_DETECT_DOMAINS = [
                 "linkvertise.com","link-target.net","link-center.net","link-to.net",
                 "loot-link.com","loot-links.com","lootlink.org","lootlinks.co",
@@ -285,7 +275,6 @@
                 return await res.text();
             }
 
-            // Extract supported URL from any text
             function extractSupportedUrl(text) {
                 if (!text) return null;
                 const urlRegex = /https?:\/\/[^\s"'<>]+/g;
@@ -330,7 +319,11 @@
                         if (json.status === "error") throw new Error(json.message || "API error");
                     } catch {}
 
-                    // Smart Detect
+                    if (result.trim().startsWith("https://ads.luarmor.net/")) {
+                        window.location.href = result.trim();
+                        return;
+                    }
+
                     if (smartDetectToggle.checked && !smartDetectTriggered) {
                         const nextUrl = extractSupportedUrl(result);
                         if (nextUrl) {
@@ -356,6 +349,10 @@
             });
 
             function displayResult(text) {
+                if (text.trim().startsWith("https://ads.luarmor.net/")) {
+                    window.location.href = text.trim();
+                    return;
+                }
                 try {
                     const u = new URL(text);
                     resultUrl.href = resultUrl.textContent = text;
