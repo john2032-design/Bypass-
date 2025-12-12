@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Vortix Bypass Helper
+// @name         Vortix.lol Bypass Helper
 // @namespace    https://vortix-bypass.vercel.app
-// @version      2.3
+// @version      2.4
 // @description  Automatically redirects supported shorteners to Vortix Bypass
 // @author       Vortix Bypass
 // @icon         https://i.ibb.co/FqLb0CxF/F8-F01-A21-CD9-C-4573-9-CB9-8-B2917-ED039-F.png
@@ -75,7 +75,8 @@
 // @match        *://lootdest.com/*
 // @match        *://links-loot.com/*
 // @match        *://linksloot.net/*
-// @match        *://auth.platoboost/*
+// @match        *://auth.platoboost.app/*
+// @match        *://auth.platorelay.com/*
 // @updateURL    https://vortix-bypass.vercel.app/meta.js
 // @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/vortix-bypass.user.js
 // @grant        GM_xmlhttpRequest
