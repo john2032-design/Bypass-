@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Vortix Bypass Helper
+// @name         Vortix.lol Bypass Helper
 // @namespace    https://vortix-bypass.vercel.app
-// @version      2.3
+// @version      2.4
 // @description  Automatically redirects supported shorteners to Vortix Bypass
 // @author       Vortix Bypass
 // @icon         https://i.ibb.co/FqLb0CxF/F8-F01-A21-CD9-C-4573-9-CB9-8-B2917-ED039-F.png
@@ -77,6 +77,7 @@
 // @match        *://links-loot.com/*
 // @match        *://linksloot.net/*
 // @match        *://auth.platoboost.app/*
+// @match        *://auth.plaorelay.com/*
 // @updateURL    https://vortix-bypass.vercel.app/meta.js
 // @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/vortix-bypass.user.js
 // @grant        GM_xmlhttpRequest
@@ -91,7 +92,7 @@
 
     const redirectWaitTime = 5;
     const bypasserSite = "https://vortix-bypass.vercel.app";
-    const currentVersion = "2.3";
+    const currentVersion = "2.4";
 
     function checkForUpdate() {
         if (window.location.href.includes('vortix-bypass.vercel.app')) return;
