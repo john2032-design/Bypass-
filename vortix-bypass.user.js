@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Vortix.lol Bypass Helper
+// @name         Vortix Bypass Helper
 // @namespace    https://vortix-bypass.vercel.app
 // @version      2.4
 // @description  Automatically redirects supported shorteners to Vortix Bypass
