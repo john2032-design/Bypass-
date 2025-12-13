@@ -38,7 +38,7 @@
 // @match        *://*lockr.xyz/*
 // @match        *://*mboost.me/*
 // @match        *://mediafire.com/*
-// @match        *://*overdrivehub.com/*
+// @match        *://*overdrivehub.xyz/*
 // @match        *://*paste.drop/*
 // @match        *://pastebin.com/*
 // @match        *://*pastes.io/*
@@ -65,8 +65,6 @@
 // @match        *://krnl.cat/*
 // @match        *://keyrblx.com/*
 // @match        *://pandadevelopment.net/*
-// @match        *://rentry.org/*
-// @match        *://paster.so/*
 // @match        *://loot-link.com/*
 // @match        *://loot-links.com/*
 // @match        *://lootlink.org/*
@@ -77,7 +75,7 @@
 // @match        *://links-loot.com/*
 // @match        *://linksloot.net/*
 // @match        *://auth.platoboost.app/*
-// @match        *://auth.plaorelay.com/*
+// @match        *://auth.platorelay.com/*
 // @match        *://junkie-development.de/*
 // @updateURL    https://vortix-bypass.vercel.app/meta.js
 // @downloadURL  https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/vortix-bypass.user.js
@@ -179,9 +177,9 @@
             width: 100% !important;
             height: 100vh !important;
             z-index: 2147483647 !important;
-            display:flex;
-            align-items:center;
-            justify-content:center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: rgba(5,6,8,0.75);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
@@ -196,73 +194,73 @@
             border: 1px solid var(--border);
             padding: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 6px 30px var(--primary-glow);
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            gap:10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
 
-        .vortix-header { display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center; }
+        .vortix-header { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
 
-        .vortix-logo { width:64px;height:64px;border-radius:12px;box-shadow:0 0 22px rgba(45,110,255,0.12);object-fit:cover; }
+        .vortix-logo { width: 64px; height: 64px; border-radius: 12px; box-shadow: 0 0 22px rgba(45,110,255,0.12); object-fit: cover; }
 
         .vortix-title {
-            font-family:'Space Grotesk', sans-serif;
-            font-size:1.6rem;
-            font-weight:700;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
             background: linear-gradient(90deg, var(--primary), #6c57ff);
-            -webkit-background-clip:text;
-            background-clip:text;
-            color:transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        .vortix-message { color: var(--text-muted); font-size:0.95rem; max-width:520px; }
+        .vortix-message { color: var(--text-muted); font-size: 0.95 95rem; max-width: 520px; }
 
-        .vortix-domain { color: var(--primary); font-weight:700; margin-left:6px; display:inline-flex; align-items:center; gap:8px; }
-        .vortix-domain img { width:16px; height:16px; border-radius:3px; display:inline-block; vertical-align:middle; }
+        .vortix-domain { color: var(--primary); font-weight: 700; margin-left: 6px; display: inline-flex; align-items: center; gap: 8px; }
+        .vortix-domain img { width: 16px; height: 16px; border-radius: 3px; display: inline-block; vertical-align: middle; }
 
-        .vortix-countdown { margin: 10px 0; display:flex; flex-direction:column; align-items:center; gap:8px; }
+        .vortix-countdown { margin: 10px 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 
-        .count-ring { width:56px; height:56px; display:block; }
-        .ring-bg { stroke: rgba(255,255,255,0.04); stroke-width:6; fill:none; }
-        .ring-fg { stroke: var(--primary); stroke-width:6; stroke-linecap:round; fill:none; filter: drop-shadow(0 6px 12px rgba(45,110,255,0.08)); }
+        .count-ring { width: 56px; height: 56px; display: block; }
+        .ring-bg { stroke: rgba(255,255,255,0.04); stroke-width: 6; fill: none; }
+        .ring-fg { stroke: var(--primary); stroke-width: 6; stroke-linecap: round; fill: none; filter: drop-shadow(0 6px 12px rgba(45,110,255,0.08)); }
 
         .vortix-count-number {
-            font-size:1.45rem;
-            font-weight:800;
-            color:var(--primary);
-            padding:6px 8px;
-            border-radius:10px;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--primary);
+            padding: 6px 8px;
+            border-radius: 10px;
             background: linear-gradient(180deg, rgba(45,110,255,0.08), rgba(255,255,255,0.01));
-            border:1px solid rgba(45,110,255,0.08);
-            min-width:40px;
-            text-align:center;
+            border: 1px solid rgba(45,110,255,0.08);
+            min-width: 40px;
+            text-align: center;
             transition: transform 140ms ease;
         }
 
-        .vortix-info { color: var(--text-muted); font-size:0.92rem; text-align:center; max-width:560px; }
+        .vortix-info { color: var(--text-muted); font-size: 0.92rem; text-align: center; max-width: 560px; }
 
-        .vortix-actions { display:flex; gap:10px; margin-top:8px; flex-wrap:wrap; justify-content:center; }
+        .vortix-actions { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
 
         .vortix-btn {
-            padding:9px 18px;
-            border-radius:12px;
-            border:none;
-            cursor:pointer;
-            font-weight:600;
-            font-size:0.95rem;
+            padding: 9px 18px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
             transition: all 0.22s ease;
             box-shadow: 0 6px 14px rgba(0,0,0,0.35);
         }
 
-        .vortix-btn.primary { background: linear-gradient(90deg,var(--primary), #6c57ff); color:white; box-shadow:0 8px 24px rgba(45,110,255,0.18); }
-        .vortix-btn.ghost { background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--text-muted); }
+        .vortix-btn.primary { background: linear-gradient(90deg,var(--primary), #6c57ff); color: white; box-shadow: 0 8px 24px rgba(45,110,255,0.18); }
+        .vortix-btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,0.06); color: var(--text-muted); }
 
         @media (max-width:520px) {
-            .vortix-card { padding:16px; width:92%; }
-            .count-ring { width:48px; height:48px; }
-            .vortix-count-number { font-size:1.2rem; min-width:36px; }
-            .vortix-title { font-size:1.25rem; }
+            .vortix-card { padding: 16px; width: 92%; }
+            .count-ring { width: 48px; height: 48px; }
+            .vortix-count-number { font-size: 1.2rem; min-width: 36px; }
+            .vortix-title { font-size: 1.25rem; }
         }
         `;
         document.documentElement.appendChild(style);
@@ -332,28 +330,26 @@
         })();
 
         let countdownInterval = null;
-        let redirectTimeout = null;
+        let fallbackTimeout = null;
         const durationMs = duration * 1000;
-        let remainingTime = durationMs;
         let startTime = Date.now();
-        
         let redirectTriggered = false;
 
         function updateCountdown() {
             if (redirectTriggered) return;
-            
+
             const elapsed = Date.now() - startTime;
-            remainingTime = Math.max(0, durationMs - elapsed);
+            const remainingTime = Math.max(0, durationMs - elapsed);
             const remainingSeconds = Math.ceil(remainingTime / 1000);
-            
+
             if (countEl) countEl.textContent = String(remainingSeconds);
-            
+
             if (ringEl && circumference) {
                 const fraction = elapsed / durationMs;
                 const offset = circumference * (1 - Math.min(fraction, 1));
                 ringEl.style.strokeDashoffset = String(offset);
             }
-            
+
             if (remainingTime <= 0) {
                 clearInterval(countdownInterval);
                 redirectTriggered = true;
@@ -361,12 +357,10 @@
             }
         }
 
-        // Start countdown
         countdownInterval = setInterval(updateCountdown, 100);
-        updateCountdown(); // Initial update
+        updateCountdown();
 
-        // Fallback timeout (in case something goes wrong with the interval)
-        const fallbackTimeout = setTimeout(() => {
+        fallbackTimeout = setTimeout(() => {
             if (redirectTriggered) return;
             redirectTriggered = true;
             if (countdownInterval) clearInterval(countdownInterval);
@@ -402,7 +396,6 @@
         function removeOverlay() {
             try {
                 if (countdownInterval) clearInterval(countdownInterval);
-                if (redirectTimeout) clearTimeout(redirectTimeout);
                 clearTimeout(fallbackTimeout);
                 const el = document.getElementById('vortix-bypass-overlay');
                 if (el) el.remove();
