@@ -307,7 +307,8 @@
                 bypassBtn.disabled = true;
                 const originalBtnHtml = bypassBtn.innerHTML;
                 bypassBtn.innerHTML = '<span>Processing...</span>';
-                let smartDetectTriggered = false;
+                const MAX_HOPS = 8;
+                let hopCount = 0;
                 const startOverall = Date.now();
                 try {
                     while (true) {
@@ -325,11 +326,15 @@
                             window.location.href = resultTextRaw.trim();
                             return;
                         }
-                        if (smartDetectToggle.checked && !smartDetectTriggered) {
+                        if (smartDetectToggle.checked) {
                             const nextUrl = extractSupportedUrl(resultTextRaw);
                             if (nextUrl) {
-                                smartDetectTriggered = true;
-                                showSuccess('Smart Detect found another link → auto-bypassing...');
+                                hopCount++;
+                                if (hopCount > MAX_HOPS) {
+                                    showError('Smart Detect exceeded maximum hops');
+                                    break;
+                                }
+                                showSuccess(`Smart Detect found another link → auto-bypassing (hop ${hopCount})...`);
                                 urlInput.value = nextUrl;
                                 await sleep(700);
                                 url = nextUrl;
