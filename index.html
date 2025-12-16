@@ -260,95 +260,139 @@
                 "auth.platoboost"
             ];
 
-            let smartDetectTriggered = false;
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const urlParam = urlParams.get('url');
-            if (urlParam) {
-                urlInput.value = decodeURIComponent(urlParam);
-                setTimeout(() => bypassBtn.click(), 100);
-            }
-            
-            async function bypassUrl(url) {
-                const res = await fetch(`https://afklol-api.vercel.app/bypass?url=${encodeURIComponent(url)}`);
-                if (!res.ok) throw new Error(`API error: ${res.status}`);
-                return await res.text();
-            }
+            const sleep = ms => new Promise(res => setTimeout(res, ms));
 
             function extractSupportedUrl(text) {
                 if (!text) return null;
                 const urlRegex = /https?:\/\/[^\s"'<>]+/g;
                 const matches = text.match(urlRegex) || [];
                 for (let raw of matches) {
-                    let url;
-                    try { url = new URL(raw); } catch { continue; }
-                    const hostname = url.hostname.toLowerCase().replace(/^www\./, '');
+                    let urlObj;
+                    try { urlObj = new URL(raw); } catch { continue; }
+                    const hostname = urlObj.hostname.toLowerCase().replace(/^www\./, '');
                     if (SMART_DETECT_DOMAINS.some(d => hostname === d || hostname.endsWith('.' + d))) {
-                        url.searchParams.delete('ref');
-                        url.searchParams.delete('utm_source');
-                        url.searchParams.delete('utm_medium');
-                        return url.toString();
+                        const candidateParams = ['url','u','r','target','link','redirect','redir'];
+                        for (let p of candidateParams) {
+                            if (urlObj.searchParams.has(p)) {
+                                let val = urlObj.searchParams.get(p);
+                                if (!val) continue;
+                                let decoded = val;
+                                try {
+                                    for (let i = 0; i < 4; i++) {
+                                        const next = decodeURIComponent(decoded);
+                                        if (next === decoded) break;
+                                        decoded = next;
+                                    }
+                                } catch(e){}
+                                const innerMatch = decoded.match(/https?:\/\/[^\s"'<>]+/);
+                                if (innerMatch) return sanitizeUrl(innerMatch[0]);
+                                if (/^\/\//.test(decoded) || /^www\./i.test(decoded)) {
+                                    return sanitizeUrl(decoded);
+                                }
+                            }
+                        }
+                        return sanitizeUrl(urlObj.toString());
+                    } else {
+                        return sanitizeUrl(urlObj.toString());
                     }
                 }
                 return null;
             }
-            
-            bypassBtn.addEventListener('click', async function() {
-                let url = urlInput.value.trim();
-                if (!url) return showError('Please enter a URL');
-                try { new URL(url); if (!url.startsWith('http')) throw ''; } 
-                catch { return showError('Please enter a valid URL starting with http:// or https://'); }
 
+            function sanitizeUrl(raw) {
+                if (!raw) return raw;
+                let s = raw.trim();
+                if (s.startsWith('//')) s = 'https:' + s;
+                try {
+                    for (let i = 0; i < 4; i++) {
+                        const dec = decodeURIComponent(s);
+                        if (dec === s) break;
+                        s = dec;
+                    }
+                } catch (e) {}
+                if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(s)) {
+                    if (/^www\./i.test(s) || /^[a-z0-9-]+\.[a-z]{2,}/i.test(s)) {
+                        s = 'https://' + s;
+                    }
+                }
+                try {
+                    const equalsCount = (s.match(/=/g) || []).length;
+                    if (s.endsWith('=') && equalsCount === 1 && !/%3D/i.test(s)) {
+                        s = s.slice(0, -1);
+                    }
+                } catch (e) {}
+                return s;
+            }
+
+            async function bypassUrl(url) {
+                const res = await fetch(`https://afklol-api.vercel.app/bypass?url=${encodeURIComponent(url)}`);
+                if (!res.ok) throw new Error(`API error: ${res.status}`);
+                return await res.text();
+            }
+
+            let isProcessing = false;
+            async function handleBypass(initialUrl) {
+                if (isProcessing) return;
+                isProcessing = true;
+                let url = sanitizeUrl(initialUrl);
+                if (!url) {
+                    showError('Please enter a URL');
+                    isProcessing = false;
+                    return;
+                }
                 loading.style.display = 'block';
                 error.style.display = success.style.display = resultContainer.style.display = 'none';
                 bypassBtn.disabled = true;
+                const originalBtnHtml = bypassBtn.innerHTML;
                 bypassBtn.innerHTML = '<span>Processing...</span>';
-                smartDetectTriggered = false;
+                let smartDetectTriggered = false;
+                const startOverall = Date.now();
 
                 try {
-                    const start = Date.now();
-                    loading.querySelector('p').textContent = 'Processing (this may take a few seconds)';
-
-                    const rawResult = await bypassUrl(url);
-                    const time = ` (${((Date.now() - start)/1000).toFixed(2)}s)`;
-
-                    let result = rawResult;
-                    try {
-                        const json = JSON.parse(rawResult);
-                        if (json.result) result = json.result;
-                        if (json.status === "error") throw new Error(json.message || "API error");
-                    } catch {}
-
-                    if (result.trim().startsWith("https://ads.luarmor.net/")) {
-                        window.location.href = result.trim();
-                        return;
-                    }
-
-                    if (smartDetectToggle.checked && !smartDetectTriggered) {
-                        const nextUrl = extractSupportedUrl(result);
-                        if (nextUrl) {
-                            smartDetectTriggered = true;
-                            showSuccess('Smart Detect found another link → auto-bypassing...');
-                            urlInput.value = nextUrl;
-                            setTimeout(() => bypassBtn.click(), 900);
+                    while (true) {
+                        const start = Date.now();
+                        loading.querySelector('p').textContent = 'Processing (this may take a few seconds)';
+                        const rawResult = await bypassUrl(url);
+                        const timeSegment = ` (${((Date.now() - start)/1000).toFixed(2)}s)`;
+                        let resultTextRaw = rawResult;
+                        try {
+                            const json = JSON.parse(rawResult);
+                            if (json.status === "error") throw new Error(json.message || "API error");
+                            if (json.result) resultTextRaw = json.result;
+                        } catch (e) {}
+                        if (resultTextRaw.trim().startsWith("https://ads.luarmor.net/")) {
+                            window.location.href = resultTextRaw.trim();
                             return;
                         }
+                        if (smartDetectToggle.checked && !smartDetectTriggered) {
+                            const nextUrl = extractSupportedUrl(resultTextRaw);
+                            if (nextUrl) {
+                                smartDetectTriggered = true;
+                                showSuccess('Smart Detect found another link → auto-bypassing...');
+                                urlInput.value = nextUrl;
+                                await sleep(700);
+                                url = nextUrl;
+                                continue;
+                            }
+                        }
+                        displayResult(resultTextRaw.trim());
+                        const overallTime = ` (${((Date.now() - startOverall)/1000).toFixed(2)}s)`;
+                        showSuccess(`Bypassed successfully!${timeSegment}`);
+                        break;
                     }
-
-                    displayResult(result.trim());
-                    showSuccess(`Bypassed successfully!${time}`);
-
                 } catch (err) {
                     console.error(err);
                     showError(`Failed: ${err.message || 'Unknown error'}`);
                 } finally {
                     loading.style.display = 'none';
                     bypassBtn.disabled = false;
-                    bypassBtn.innerHTML = '<span>Bypass Link</span>';
+                    bypassBtn.innerHTML = originalBtnHtml || '<span>Bypass Link</span>';
+                    isProcessing = false;
                 }
-            });
+            }
 
             function displayResult(text) {
+                if (!text) return;
                 if (text.trim().startsWith("https://ads.luarmor.net/")) {
                     window.location.href = text.trim();
                     return;
@@ -383,6 +427,65 @@
             };
 
             redirectBtn.onclick = () => window.location.href = resultUrl.href;
+
+            bypassBtn.addEventListener('click', async function() {
+                const u = urlInput.value.trim();
+                if (!u) return showError('Please enter a URL');
+                try { new URL(sanitizeUrl(u)); } catch { return showError('Please enter a valid URL starting with http:// or https://'); }
+                await handleBypass(u);
+            });
+
+            function getIncomingUrl() {
+                const params = new URLSearchParams(window.location.search);
+                const tryKeys = ['url','u','link','linkurl','target','redirect','r','redir','to'];
+                for (let k of tryKeys) {
+                    if (params.has(k)) {
+                        let val = params.get(k);
+                        if (!val) continue;
+                        try {
+                            for (let i = 0; i < 4; i++) {
+                                const dec = decodeURIComponent(val);
+                                if (dec === val) break;
+                                val = dec;
+                            }
+                        } catch(e){}
+                        val = sanitizeUrl(val);
+                        if (val) return val;
+                    }
+                }
+                if (params.has('q')) {
+                    let v = params.get('q') || '';
+                    try {
+                        for (let i = 0; i < 4; i++) {
+                            const dec = decodeURIComponent(v);
+                            if (dec === v) break;
+                            v = dec;
+                        }
+                    } catch(e){}
+                    v = sanitizeUrl(v);
+                    if (v) return v;
+                }
+                if (window.location.hash) {
+                    let hash = window.location.hash.replace(/^#\/?/, '');
+                    try {
+                        for (let i = 0; i < 4; i++) {
+                            const dec = decodeURIComponent(hash);
+                            if (dec === hash) break;
+                            hash = dec;
+                        }
+                    } catch(e){}
+                    hash = sanitizeUrl(hash);
+                    if (hash) return hash;
+                }
+                return null;
+            }
+
+            const incoming = getIncomingUrl();
+            if (incoming) {
+                urlInput.value = incoming;
+                setTimeout(() => bypassBtn.click(), 120);
+            }
+
             urlInput.addEventListener('keypress', e => e.key === 'Enter' && bypassBtn.click());
             urlInput.focus();
         });
