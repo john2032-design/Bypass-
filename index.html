@@ -10,12 +10,54 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-dark: #050505; --bg-card: #0e0e11; --primary: #2d6eff; --primary-glow: #2d6eff80; --accent: #bf00ff; --text-main: #ffffff; --text-muted: #888899; --border: rgba(255, 255, 255, 0.08); --radius: 24px; --glass: rgba(20, 20, 25, 0.7); }
+        :root {
+            --bg-dark: #050505;
+            --bg-card: #0e0e11;
+            --primary: #2d6eff;
+            --primary-glow: #2d6eff80;
+            --accent: #bf00ff;
+            --text-main: #ffffff;
+            --text-muted: #888899;
+            --border: rgba(255, 255, 255, 0.08);
+            --radius: 24px;
+            --glass: rgba(20, 20, 25, 0.7);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-        body { background-color: var(--bg-dark); background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 50px 50px; color: var(--text-main); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
-        body::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; background: radial-gradient(circle, var(--primary) 0%, transparent 70%); opacity: 0.15; filter: blur(80px); z-index: -1; pointer-events: none; }
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+        }
         .container { max-width: 900px; width: 100%; padding: 40px 20px; animation: fadeIn 0.8s ease-out; }
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 100px; margin-bottom: 60px; position: sticky; top: 20px; z-index: 100; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 24px; background: var(--glass); backdrop-filter: blur(12px);
+            border: 1px solid var(--border); border-radius: 100px; margin-bottom: 60px;
+            position: sticky; top: 20px; z-index: 100; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
         .nav-brand { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 10px; }
         .nav-links { display: flex; gap: 8px; }
         .nav-btn { padding: 10px 20px; border-radius: 50px; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); color: var(--text-muted); }
@@ -29,17 +71,29 @@
         .subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto; }
         .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; box-shadow: 0 20px 50px -20px rgba(0,0,0,0.7); margin-bottom: 30px; position: relative; overflow: hidden; }
         .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--primary), transparent); opacity: 0.5; }
-        .input-group { display: flex; gap: 16px; position: relative; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
-        input[type="url"] { flex: 1; min-width: 280px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: white; padding: 18px 24px; border-radius: 16px; font-size: 1.05rem; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+        .input-group {
+            display: flex; gap: 16px; position: relative; margin-bottom: 24px; flex-wrap: wrap; align-items: center;
+        }
+        input[type="url"] {
+            flex: 1; min-width: 280px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: white;
+            padding: 18px 24px; border-radius: 16px; font-size: 1.05rem; transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
         input[type="url"]:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(45, 110, 255, 0.15), inset 0 2px 4px rgba(0,0,0,0.2); }
-        .toggle-wrapper { display: flex; align-items: center; gap: 12px; white-space: nowrap; color: var(--text-muted); font-size: 0.9rem; }
+        .toggle-wrapper {
+            display: flex; align-items: center; gap: 12px; white-space: nowrap; color: var(--text-muted); font-size: 0.9rem;
+        }
         .switch { position: relative; display: inline-block; width: 56px; height: 30px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
         .slider:before { position: absolute; content: ""; height: 24px; width: 24px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--primary); }
         input:checked + .slider:before { transform: translateX(26px); }
-        button { background: var(--primary); color: white; border: none; padding: 0 32px; border-radius: 16px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px var(--primary-glow); position: relative; overflow: hidden; height: 56px; }
+        button {
+            background: var(--primary); color: white; border: none; padding: 0 32px; border-radius: 16px;
+            font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 20px var(--primary-glow); position: relative; overflow: hidden; height: 56px;
+        }
         button:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--primary-glow); }
         button:active { transform: translateY(0); }
         button:disabled { background: #333; color: #666; box-shadow: none; cursor: not-allowed; transform: none; }
@@ -64,7 +118,14 @@
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 768px) { h1 { font-size: 2.5rem; } .input-group { flex-direction: column; align-items: stretch; } .toggle-wrapper { justify-content: center; } .navbar { flex-direction: column; gap: 15px; padding: 20px; border-radius: 24px; } button, .secondary-btn { width: 100%; } .action-buttons { flex-direction: column; } }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .input-group { flex-direction: column; align-items: stretch; }
+            .toggle-wrapper { justify-content: center; }
+            .navbar { flex-direction: column; gap: 15px; padding: 20px; border-radius: 24px; }
+            button, .secondary-btn { width: 100%; }
+            .action-buttons { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
@@ -146,27 +207,28 @@
             const copyBtn = document.getElementById('copyBtn');
             const redirectBtn = document.getElementById('redirectBtn');
             const savedSmartDetect = localStorage.getItem('vortixSmartDetect');
-            if (savedSmartDetect !== null) { smartDetectToggle.checked = savedSmartDetect === 'true'; }
-            smartDetectToggle.addEventListener('change', function() { localStorage.setItem('vortixSmartDetect', this.checked); });
+            if (savedSmartDetect !== null) {
+                smartDetectToggle.checked = savedSmartDetect === 'true';
+            }
+            smartDetectToggle.addEventListener('change', function() {
+                localStorage.setItem('vortixSmartDetect', this.checked);
+            });
             const SMART_DETECT_DOMAINS = [
-                "linkvertise.com","link-target.net","link-center.net","link-to.net",
-                "loot-link.com","loot-links.com","lootlink.org","lootlinks.co",
+                "linkvertise","linkvertise.com","link-target.net","link-center.net","link-to.net",
+                "loot","loot-link.com","loot-links.com","lootlink.org","lootlinks.co",
                 "lootdest.info","lootdest.org","lootdest.com","links-loot.com","linksloot.net",
-                "rentry.org","paster.so","rekonise.com","sub2unlock","bit.ly","tinyurl.com",
-                "boost.ink","bst.gg","krnl.cat","pandadevelopment.net","keyrblx.com",
+                "rentry.org","paster.so","pastebin.com","paste.drop",
+                "rekonise","sub2unlock","bit.ly","tinyurl","tinyurl.com","boost.ink",
+                "bst.gg","adf.ly","krnl.cat","pandadevelopment.net","keyrblx.com",
                 "keyguardian.org","getkey.xyz","quartyz.com","rinku.pro","rkns.link",
-                "auth.platoboost"
+                "auth.platoboost","auth.plato","shortconnect","mboost","work.ink",
+                "link-hub","link-hub.net","linkunlocker.com","link-unlock.com","linkshrink.com",
+                "linkify.ru","linkbucks.com","link4sub.com","link4m.com","cuty.io",
+                "cuttlinks.com","nimblelinks.com","snipit.link","tinylink.onl","shrinkme.click"
             ];
             const sleep = ms => new Promise(res => setTimeout(res, ms));
-            function normalizeToString(x) {
-                if (x === null || x === undefined) return '';
-                if (typeof x === 'string') return x;
-                try { return JSON.stringify(x); } catch (e) { return String(x); }
-            }
             function extractSupportedUrl(text) {
                 if (!text) return null;
-                text = normalizeToString(text);
-                text = text.replace(/&amp;/g, '&');
                 const urlRegex = /https?:\/\/[^\s"'<>]+/g;
                 const matches = text.match(urlRegex) || [];
                 for (let raw of matches) {
@@ -174,23 +236,24 @@
                     try { urlObj = new URL(raw); } catch { continue; }
                     const hostname = urlObj.hostname.toLowerCase().replace(/^www\./, '');
                     if (SMART_DETECT_DOMAINS.some(d => hostname === d || hostname.endsWith('.' + d))) {
-                        const candidateParams = ['url','u','r','target','link','redirect','redir','to'];
+                        const candidateParams = ['url','u','r','target','link','redirect','redir','to','linkurl'];
                         for (let p of candidateParams) {
                             if (urlObj.searchParams.has(p)) {
                                 let val = urlObj.searchParams.get(p);
                                 if (!val) continue;
                                 let decoded = val;
                                 try {
-                                    for (let i = 0; i < 5; i++) {
+                                    for (let i = 0; i < 4; i++) {
                                         const next = decodeURIComponent(decoded);
                                         if (next === decoded) break;
                                         decoded = next;
                                     }
                                 } catch(e){}
-                                decoded = decoded.replace(/&amp;/g, '&');
                                 const innerMatch = decoded.match(/https?:\/\/[^\s"'<>]+/);
                                 if (innerMatch) return sanitizeUrl(innerMatch[0]);
-                                if (/^\/\//.test(decoded) || /^www\./i.test(decoded)) { return sanitizeUrl(decoded); }
+                                if (/^\/\//.test(decoded) || /^www\./i.test(decoded)) {
+                                    return sanitizeUrl(decoded);
+                                }
                             }
                         }
                         return sanitizeUrl(urlObj.toString());
@@ -202,21 +265,25 @@
             }
             function sanitizeUrl(raw) {
                 if (!raw) return raw;
-                let s = normalizeToString(raw).trim();
+                let s = raw.trim();
                 if (s.startsWith('//')) s = 'https:' + s;
                 try {
-                    for (let i = 0; i < 5; i++) {
+                    for (let i = 0; i < 4; i++) {
                         const dec = decodeURIComponent(s);
                         if (dec === s) break;
                         s = dec;
                     }
                 } catch (e) {}
                 if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(s)) {
-                    if (/^www\./i.test(s) || /^[a-z0-9-]+\.[a-z]{2,}/i.test(s)) { s = 'https://' + s; }
+                    if (/^www\./i.test(s) || /^[a-z0-9-]+\.[a-z]{2,}/i.test(s)) {
+                        s = 'https://' + s;
+                    }
                 }
                 try {
                     const equalsCount = (s.match(/=/g) || []).length;
-                    if (s.endsWith('=') && equalsCount === 1 && !/%3D/i.test(s)) { s = s.slice(0, -1); }
+                    if (s.endsWith('=') && equalsCount === 1 && !/%3D/i.test(s)) {
+                        s = s.slice(0, -1);
+                    }
                 } catch (e) {}
                 return s;
             }
@@ -230,14 +297,17 @@
                 if (isProcessing) return;
                 isProcessing = true;
                 let url = sanitizeUrl(initialUrl);
-                if (!url) { showError('Please enter a URL'); isProcessing = false; return; }
+                if (!url) {
+                    showError('Please enter a URL');
+                    isProcessing = false;
+                    return;
+                }
                 loading.style.display = 'block';
                 error.style.display = success.style.display = resultContainer.style.display = 'none';
                 bypassBtn.disabled = true;
                 const originalBtnHtml = bypassBtn.innerHTML;
                 bypassBtn.innerHTML = '<span>Processing...</span>';
-                let hopCount = 0;
-                const maxHops = 5;
+                let smartDetectTriggered = false;
                 const startOverall = Date.now();
                 try {
                     while (true) {
@@ -245,28 +315,29 @@
                         loading.querySelector('p').textContent = 'Processing (this may take a few seconds)';
                         const rawResult = await bypassUrl(url);
                         const timeSegment = ` (${((Date.now() - start)/1000).toFixed(2)}s)`;
-                        let resultTextRaw = normalizeToString(rawResult);
+                        let resultTextRaw = rawResult;
                         try {
                             const json = JSON.parse(rawResult);
-                            if (json && json.status === "error") throw new Error(json.message || "API error");
-                            if (json && json.result !== undefined) {
-                                resultTextRaw = (typeof json.result === 'string') ? json.result : JSON.stringify(json.result);
-                            }
+                            if (json.status === "error") throw new Error(json.message || "API error");
+                            if (json.result) resultTextRaw = json.result;
                         } catch (e) {}
-                        resultTextRaw = resultTextRaw.replace(/&amp;/g, '&');
-                        if (resultTextRaw.trim().startsWith("https://ads.luarmor.net/")) { window.location.href = resultTextRaw.trim(); return; }
-                        if (smartDetectToggle.checked && hopCount < maxHops) {
+                        if (resultTextRaw.trim().startsWith("https://ads.luarmor.net/")) {
+                            window.location.href = resultTextRaw.trim();
+                            return;
+                        }
+                        if (smartDetectToggle.checked && !smartDetectTriggered) {
                             const nextUrl = extractSupportedUrl(resultTextRaw);
                             if (nextUrl) {
-                                hopCount++;
-                                showSuccess(`Smart Detect found another link → auto-bypassing (hop ${hopCount})...`);
+                                smartDetectTriggered = true;
+                                showSuccess('Smart Detect found another link → auto-bypassing...');
                                 urlInput.value = nextUrl;
-                                await sleep(600);
+                                await sleep(700);
                                 url = nextUrl;
                                 continue;
                             }
                         }
                         displayResult(resultTextRaw.trim());
+                        const overallTime = ` (${((Date.now() - startOverall)/1000).toFixed(2)}s)`;
                         showSuccess(`Bypassed successfully!${timeSegment}`);
                         break;
                     }
@@ -282,7 +353,10 @@
             }
             function displayResult(text) {
                 if (!text) return;
-                if (text.trim().startsWith("https://ads.luarmor.net/")) { window.location.href = text.trim(); return; }
+                if (text.trim().startsWith("https://ads.luarmor.net/")) {
+                    window.location.href = text.trim();
+                    return;
+                }
                 try {
                     const u = new URL(text);
                     resultUrl.href = resultUrl.textContent = text;
@@ -324,7 +398,7 @@
                         let val = params.get(k);
                         if (!val) continue;
                         try {
-                            for (let i = 0; i < 5; i++) {
+                            for (let i = 0; i < 4; i++) {
                                 const dec = decodeURIComponent(val);
                                 if (dec === val) break;
                                 val = dec;
@@ -337,7 +411,7 @@
                 if (params.has('q')) {
                     let v = params.get('q') || '';
                     try {
-                        for (let i = 0; i < 5; i++) {
+                        for (let i = 0; i < 4; i++) {
                             const dec = decodeURIComponent(v);
                             if (dec === v) break;
                             v = dec;
@@ -349,7 +423,7 @@
                 if (window.location.hash) {
                     let hash = window.location.hash.replace(/^#\/?/, '');
                     try {
-                        for (let i = 0; i < 5; i++) {
+                        for (let i = 0; i < 4; i++) {
                             const dec = decodeURIComponent(hash);
                             if (dec === hash) break;
                             hash = dec;
