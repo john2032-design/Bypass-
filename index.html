@@ -6,153 +6,68 @@
     <title>Vortix Bypass - Designed For Speed</title>
     <meta name="description" content="Bypass URL shorteners and skip wait times with Vortix Bypass">
     <link rel="icon" href="https://i.ibb.co/FqLb0CxF/F8-F01-A21-CD9-C-4573-9-CB9-8-B2917-ED039-F.png" type="image/png">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-
     <style>
-        :root {
-            --bg-dark: #050505;
-            --bg-card: #0e0e11;
-            --primary: #2d6eff;
-            --primary-glow: #2d6eff80;
-            --accent: #bf00ff;
-            --text-main: #ffffff;
-            --text-muted: #888899;
-            --border: rgba(255, 255, 255, 0.08);
-            --radius: 24px;
-            --glass: rgba(20, 20, 25, 0.7);
-        }
-
+        :root { --bg-dark: #050505; --bg-card: #0e0e11; --primary: #2d6eff; --primary-glow: #2d6eff80; --accent: #bf00ff; --text-main: #ffffff; --text-muted: #888899; --border: rgba(255, 255, 255, 0.08); --radius: 24px; --glass: rgba(20, 20, 25, 0.7); }
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-
-        body {
-            background-color: var(--bg-dark);
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            height: 300px;
-            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-            opacity: 0.15;
-            filter: blur(80px);
-            z-index: -1;
-            pointer-events: none;
-        }
-
+        body { background-color: var(--bg-dark); background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 50px 50px; color: var(--text-main); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
+        body::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; background: radial-gradient(circle, var(--primary) 0%, transparent 70%); opacity: 0.15; filter: blur(80px); z-index: -1; pointer-events: none; }
         .container { max-width: 900px; width: 100%; padding: 40px 20px; animation: fadeIn 0.8s ease-out; }
-
-        .navbar {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 16px 24px; background: var(--glass); backdrop-filter: blur(12px);
-            border: 1px solid var(--border); border-radius: 100px; margin-bottom: 60px;
-            position: sticky; top: 20px; z-index: 100; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
-        }
-
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 100px; margin-bottom: 60px; position: sticky; top: 20px; z-index: 100; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
         .nav-brand { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 10px; }
         .nav-links { display: flex; gap: 8px; }
         .nav-btn { padding: 10px 20px; border-radius: 50px; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); color: var(--text-muted); }
         .nav-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
         .nav-btn.active { background: var(--text-main); color: black; font-weight: 600; }
-
         header { text-align: center; margin-bottom: 50px; }
         .logo-container { position: relative; width: 100px; height: 100px; margin: 0 auto 20px; }
         .logo { width: 100%; height: 100%; border-radius: 24px; box-shadow: 0 0 30px var(--primary-glow); transition: transform 0.5s ease; }
         .logo:hover { transform: scale(1.05) rotate(3deg); }
         h1 { font-family: 'Space Grotesk', sans-serif; font-size: 3.5rem; line-height: 1.1; margin-bottom: 12px; background: linear-gradient(135deg, #fff 30%, #888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
         .subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto; }
-
         .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; box-shadow: 0 20px 50px -20px rgba(0,0,0,0.7); margin-bottom: 30px; position: relative; overflow: hidden; }
         .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--primary), transparent); opacity: 0.5; }
-
-        .input-group {
-            display: flex; gap: 16px; position: relative; margin-bottom: 24px; flex-wrap: wrap; align-items: center;
-        }
-
-        input[type="url"] {
-            flex: 1; min-width: 280px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: white;
-            padding: 18px 24px; border-radius: 16px; font-size: 1.05rem; transition: all 0.3s ease;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-        }
+        .input-group { display: flex; gap: 16px; position: relative; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
+        input[type="url"] { flex: 1; min-width: 280px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: white; padding: 18px 24px; border-radius: 16px; font-size: 1.05rem; transition: all 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
         input[type="url"]:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(45, 110, 255, 0.15), inset 0 2px 4px rgba(0,0,0,0.2); }
-
-        .toggle-wrapper {
-            display: flex; align-items: center; gap: 12px; white-space: nowrap; color: var(--text-muted); font-size: 0.9rem;
-        }
-
+        .toggle-wrapper { display: flex; align-items: center; gap: 12px; white-space: nowrap; color: var(--text-muted); font-size: 0.9rem; }
         .switch { position: relative; display: inline-block; width: 56px; height: 30px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
         .slider:before { position: absolute; content: ""; height: 24px; width: 24px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--primary); }
         input:checked + .slider:before { transform: translateX(26px); }
-
-        button {
-            background: var(--primary); color: white; border: none; padding: 0 32px; border-radius: 16px;
-            font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 4px 20px var(--primary-glow); position: relative; overflow: hidden; height: 56px;
-        }
+        button { background: var(--primary); color: white; border: none; padding: 0 32px; border-radius: 16px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px var(--primary-glow); position: relative; overflow: hidden; height: 56px; }
         button:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--primary-glow); }
         button:active { transform: translateY(0); }
         button:disabled { background: #333; color: #666; box-shadow: none; cursor: not-allowed; transform: none; }
-
         .loading { display: none; text-align: center; padding: 20px; animation: fadeIn 0.3s ease; }
         .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 15px; }
-
         .result-container { display: none; margin-top: 30px; padding-top: 30px; border-top: 1px solid var(--border); animation: slideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .result-box { background: rgba(45, 110, 255, 0.05); border: 1px dashed var(--primary); border-radius: 16px; padding: 24px; text-align: center; margin-bottom: 20px; word-break: break-all; }
         .result-url { color: var(--primary); font-size: 1.1rem; text-decoration: none; font-weight: 500; }
         .result-url:hover { text-decoration: underline; }
-
         .action-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
         .secondary-btn { background: rgba(255,255,255,0.05); box-shadow: none; color: var(--text-main); }
         .secondary-btn:hover { background: rgba(255,255,255,0.1); }
-
         .status-msg { padding: 12px; border-radius: 12px; margin-bottom: 20px; text-align: center; display: none; font-size: 0.9rem; animation: fadeIn 0.3s ease; }
         .error { background: rgba(255, 50, 50, 0.1); color: #ff5555; border: 1px solid rgba(255, 50, 50, 0.2); }
         .success { background: rgba(0, 255, 150, 0.1); color: #00ff96; border: 1px solid rgba(0, 255, 150, 0.2); }
-
         .how-it-works { background: transparent; border: 1px solid var(--border); }
         .how-it-works h2 { font-family: 'Space Grotesk', sans-serif; margin-bottom: 15px; }
         .how-it-works p, .how-it-works li { color: var(--text-muted); line-height: 1.6; }
         .steps { margin: 20px 0 20px 20px; }
         .steps li { margin-bottom: 8px; }
-
         footer { margin-top: auto; color: rgba(255,255,255,0.3); font-size: 0.85rem; padding-bottom: 20px; }
-
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .input-group { flex-direction: column; align-items: stretch; }
-            .toggle-wrapper { justify-content: center; }
-            .navbar { flex-direction: column; gap: 15px; padding: 20px; border-radius: 24px; }
-            button, .secondary-btn { width: 100%; }
-            .action-buttons { flex-direction: column; }
-        }
+        @media (max-width: 768px) { h1 { font-size: 2.5rem; } .input-group { flex-direction: column; align-items: stretch; } .toggle-wrapper { justify-content: center; } .navbar { flex-direction: column; gap: 15px; padding: 20px; border-radius: 24px; } button, .secondary-btn { width: 100%; } .action-buttons { flex-direction: column; } }
     </style>
 </head>
 <body>
-
     <div class="container">
         <nav class="navbar">
             <a href="/" class="nav-brand">
@@ -165,7 +80,6 @@
                 <a href="https://raw.githubusercontent.com/john2032-design/Bypass-/refs/heads/main/vortix-bypass.user.js" target="_blank" class="nav-btn">Userscript</a>
             </div>
         </nav>
-
         <header>
             <div class="logo-container">
                 <img src="https://i.ibb.co/FqLb0CxF/F8-F01-A21-CD9-C-4573-9-CB9-8-B2917-ED039-F.png" alt="Vortix Bypass Logo" class="logo">
@@ -173,12 +87,10 @@
             <h1>Vortix Bypass</h1>
             <p class="subtitle">Bypass URL shorteners instantly. No wait times. No ads.</p>
         </header>
-        
         <main>
             <div class="card">
                 <div class="input-group">
                     <input type="url" id="urlInput" placeholder="Paste your URL here (e.g., linkvertise...)" autocomplete="off" aria-label="URL to bypass">
-
                     <div class="toggle-wrapper">
                         <span>Smart Detect</span>
                         <label class="switch">
@@ -186,18 +98,14 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
-
                     <button id="bypassBtn"><span>Bypass Link</span></button>
                 </div>
-              
                 <div class="loading" id="loading">
                     <div class="spinner" aria-hidden="true"></div>
                     <p style="color: var(--text-muted)">Processing request via API...</p>
                 </div>
-              
                 <div class="status-msg error" id="error" role="alert"></div>
                 <div class="status-msg success" id="success" role="status"></div>
-              
                 <div class="result-container" id="resultContainer">
                     <div class="result-box">
                         <a href="#" id="resultUrl" class="result-url" target="_blank" rel="noopener"></a>
@@ -209,7 +117,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="card how-it-works">
                 <h2>How It Works</h2>
                 <p>Vortix Bypass utilizes advanced API endpoints to resolve destination links behind ad-walls.</p>
@@ -221,12 +128,10 @@
                 <p><strong>Smart Detect:</strong> When enabled, if the result contains another supported shortener, it will be automatically bypassed.</p>
             </div>
         </main>
-
         <footer>
             <p>Vortix Bypass © 2025 - Designed for Speed</p>
         </footer>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const urlInput = document.getElementById('urlInput');
@@ -240,16 +145,9 @@
             const resultText = document.getElementById('resultText');
             const copyBtn = document.getElementById('copyBtn');
             const redirectBtn = document.getElementById('redirectBtn');
-            
             const savedSmartDetect = localStorage.getItem('vortixSmartDetect');
-            if (savedSmartDetect !== null) {
-                smartDetectToggle.checked = savedSmartDetect === 'true';
-            }
-
-            smartDetectToggle.addEventListener('change', function() {
-                localStorage.setItem('vortixSmartDetect', this.checked);
-            });
-
+            if (savedSmartDetect !== null) { smartDetectToggle.checked = savedSmartDetect === 'true'; }
+            smartDetectToggle.addEventListener('change', function() { localStorage.setItem('vortixSmartDetect', this.checked); });
             const SMART_DETECT_DOMAINS = [
                 "linkvertise.com","link-target.net","link-center.net","link-to.net",
                 "loot-link.com","loot-links.com","lootlink.org","lootlinks.co",
@@ -259,11 +157,16 @@
                 "keyguardian.org","getkey.xyz","quartyz.com","rinku.pro","rkns.link",
                 "auth.platoboost"
             ];
-
             const sleep = ms => new Promise(res => setTimeout(res, ms));
-
+            function normalizeToString(x) {
+                if (x === null || x === undefined) return '';
+                if (typeof x === 'string') return x;
+                try { return JSON.stringify(x); } catch (e) { return String(x); }
+            }
             function extractSupportedUrl(text) {
                 if (!text) return null;
+                text = normalizeToString(text);
+                text = text.replace(/&amp;/g, '&');
                 const urlRegex = /https?:\/\/[^\s"'<>]+/g;
                 const matches = text.match(urlRegex) || [];
                 for (let raw of matches) {
@@ -271,24 +174,23 @@
                     try { urlObj = new URL(raw); } catch { continue; }
                     const hostname = urlObj.hostname.toLowerCase().replace(/^www\./, '');
                     if (SMART_DETECT_DOMAINS.some(d => hostname === d || hostname.endsWith('.' + d))) {
-                        const candidateParams = ['url','u','r','target','link','redirect','redir'];
+                        const candidateParams = ['url','u','r','target','link','redirect','redir','to'];
                         for (let p of candidateParams) {
                             if (urlObj.searchParams.has(p)) {
                                 let val = urlObj.searchParams.get(p);
                                 if (!val) continue;
                                 let decoded = val;
                                 try {
-                                    for (let i = 0; i < 4; i++) {
+                                    for (let i = 0; i < 5; i++) {
                                         const next = decodeURIComponent(decoded);
                                         if (next === decoded) break;
                                         decoded = next;
                                     }
                                 } catch(e){}
+                                decoded = decoded.replace(/&amp;/g, '&');
                                 const innerMatch = decoded.match(/https?:\/\/[^\s"'<>]+/);
                                 if (innerMatch) return sanitizeUrl(innerMatch[0]);
-                                if (/^\/\//.test(decoded) || /^www\./i.test(decoded)) {
-                                    return sanitizeUrl(decoded);
-                                }
+                                if (/^\/\//.test(decoded) || /^www\./i.test(decoded)) { return sanitizeUrl(decoded); }
                             }
                         }
                         return sanitizeUrl(urlObj.toString());
@@ -298,85 +200,73 @@
                 }
                 return null;
             }
-
             function sanitizeUrl(raw) {
                 if (!raw) return raw;
-                let s = raw.trim();
+                let s = normalizeToString(raw).trim();
                 if (s.startsWith('//')) s = 'https:' + s;
                 try {
-                    for (let i = 0; i < 4; i++) {
+                    for (let i = 0; i < 5; i++) {
                         const dec = decodeURIComponent(s);
                         if (dec === s) break;
                         s = dec;
                     }
                 } catch (e) {}
                 if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(s)) {
-                    if (/^www\./i.test(s) || /^[a-z0-9-]+\.[a-z]{2,}/i.test(s)) {
-                        s = 'https://' + s;
-                    }
+                    if (/^www\./i.test(s) || /^[a-z0-9-]+\.[a-z]{2,}/i.test(s)) { s = 'https://' + s; }
                 }
                 try {
                     const equalsCount = (s.match(/=/g) || []).length;
-                    if (s.endsWith('=') && equalsCount === 1 && !/%3D/i.test(s)) {
-                        s = s.slice(0, -1);
-                    }
+                    if (s.endsWith('=') && equalsCount === 1 && !/%3D/i.test(s)) { s = s.slice(0, -1); }
                 } catch (e) {}
                 return s;
             }
-
             async function bypassUrl(url) {
                 const res = await fetch(`https://afklol-api.vercel.app/bypass?url=${encodeURIComponent(url)}`);
                 if (!res.ok) throw new Error(`API error: ${res.status}`);
                 return await res.text();
             }
-
             let isProcessing = false;
             async function handleBypass(initialUrl) {
                 if (isProcessing) return;
                 isProcessing = true;
                 let url = sanitizeUrl(initialUrl);
-                if (!url) {
-                    showError('Please enter a URL');
-                    isProcessing = false;
-                    return;
-                }
+                if (!url) { showError('Please enter a URL'); isProcessing = false; return; }
                 loading.style.display = 'block';
                 error.style.display = success.style.display = resultContainer.style.display = 'none';
                 bypassBtn.disabled = true;
                 const originalBtnHtml = bypassBtn.innerHTML;
                 bypassBtn.innerHTML = '<span>Processing...</span>';
-                let smartDetectTriggered = false;
+                let hopCount = 0;
+                const maxHops = 5;
                 const startOverall = Date.now();
-
                 try {
                     while (true) {
                         const start = Date.now();
                         loading.querySelector('p').textContent = 'Processing (this may take a few seconds)';
                         const rawResult = await bypassUrl(url);
                         const timeSegment = ` (${((Date.now() - start)/1000).toFixed(2)}s)`;
-                        let resultTextRaw = rawResult;
+                        let resultTextRaw = normalizeToString(rawResult);
                         try {
                             const json = JSON.parse(rawResult);
-                            if (json.status === "error") throw new Error(json.message || "API error");
-                            if (json.result) resultTextRaw = json.result;
+                            if (json && json.status === "error") throw new Error(json.message || "API error");
+                            if (json && json.result !== undefined) {
+                                resultTextRaw = (typeof json.result === 'string') ? json.result : JSON.stringify(json.result);
+                            }
                         } catch (e) {}
-                        if (resultTextRaw.trim().startsWith("https://ads.luarmor.net/")) {
-                            window.location.href = resultTextRaw.trim();
-                            return;
-                        }
-                        if (smartDetectToggle.checked && !smartDetectTriggered) {
+                        resultTextRaw = resultTextRaw.replace(/&amp;/g, '&');
+                        if (resultTextRaw.trim().startsWith("https://ads.luarmor.net/")) { window.location.href = resultTextRaw.trim(); return; }
+                        if (smartDetectToggle.checked && hopCount < maxHops) {
                             const nextUrl = extractSupportedUrl(resultTextRaw);
                             if (nextUrl) {
-                                smartDetectTriggered = true;
-                                showSuccess('Smart Detect found another link → auto-bypassing...');
+                                hopCount++;
+                                showSuccess(`Smart Detect found another link → auto-bypassing (hop ${hopCount})...`);
                                 urlInput.value = nextUrl;
-                                await sleep(700);
+                                await sleep(600);
                                 url = nextUrl;
                                 continue;
                             }
                         }
                         displayResult(resultTextRaw.trim());
-                        const overallTime = ` (${((Date.now() - startOverall)/1000).toFixed(2)}s)`;
                         showSuccess(`Bypassed successfully!${timeSegment}`);
                         break;
                     }
@@ -390,13 +280,9 @@
                     isProcessing = false;
                 }
             }
-
             function displayResult(text) {
                 if (!text) return;
-                if (text.trim().startsWith("https://ads.luarmor.net/")) {
-                    window.location.href = text.trim();
-                    return;
-                }
+                if (text.trim().startsWith("https://ads.luarmor.net/")) { window.location.href = text.trim(); return; }
                 try {
                     const u = new URL(text);
                     resultUrl.href = resultUrl.textContent = text;
@@ -412,10 +298,8 @@
                 resultContainer.style.display = 'block';
                 resultContainer.scrollIntoView({ behavior: 'smooth' });
             }
-
             function showError(msg) { error.textContent = msg; error.style.display = 'block'; success.style.display = 'none'; }
             function showSuccess(msg) { success.textContent = msg; success.style.display = 'block'; error.style.display = 'none'; }
-
             copyBtn.onclick = () => {
                 const text = resultUrl.style.display !== 'none' ? resultUrl.href : resultText.textContent;
                 navigator.clipboard.writeText(text).then(() => {
@@ -425,16 +309,13 @@
                     setTimeout(() => { copyBtn.innerHTML = orig; copyBtn.style.background = ''; }, 2000);
                 });
             };
-
             redirectBtn.onclick = () => window.location.href = resultUrl.href;
-
             bypassBtn.addEventListener('click', async function() {
                 const u = urlInput.value.trim();
                 if (!u) return showError('Please enter a URL');
                 try { new URL(sanitizeUrl(u)); } catch { return showError('Please enter a valid URL starting with http:// or https://'); }
                 await handleBypass(u);
             });
-
             function getIncomingUrl() {
                 const params = new URLSearchParams(window.location.search);
                 const tryKeys = ['url','u','link','linkurl','target','redirect','r','redir','to'];
@@ -443,7 +324,7 @@
                         let val = params.get(k);
                         if (!val) continue;
                         try {
-                            for (let i = 0; i < 4; i++) {
+                            for (let i = 0; i < 5; i++) {
                                 const dec = decodeURIComponent(val);
                                 if (dec === val) break;
                                 val = dec;
@@ -456,7 +337,7 @@
                 if (params.has('q')) {
                     let v = params.get('q') || '';
                     try {
-                        for (let i = 0; i < 4; i++) {
+                        for (let i = 0; i < 5; i++) {
                             const dec = decodeURIComponent(v);
                             if (dec === v) break;
                             v = dec;
@@ -468,7 +349,7 @@
                 if (window.location.hash) {
                     let hash = window.location.hash.replace(/^#\/?/, '');
                     try {
-                        for (let i = 0; i < 4; i++) {
+                        for (let i = 0; i < 5; i++) {
                             const dec = decodeURIComponent(hash);
                             if (dec === hash) break;
                             hash = dec;
@@ -479,13 +360,11 @@
                 }
                 return null;
             }
-
             const incoming = getIncomingUrl();
             if (incoming) {
                 urlInput.value = incoming;
                 setTimeout(() => bypassBtn.click(), 120);
             }
-
             urlInput.addEventListener('keypress', e => e.key === 'Enter' && bypassBtn.click());
             urlInput.focus();
         });
